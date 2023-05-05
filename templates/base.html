@@ -18,45 +18,45 @@
     <script>
         tailwind.config = {
             theme: {
-                extend: {
-                    colors: {
-                        transparent: "transparent",
-                        current: "currentColor",
-                        black: "#000000",
-                        blackdove: "3C4048",
-                        white: "#FFFFFF",
-                        green: "#85C88A",
-                        red: "#BD4B4B",
-                        redbright: "#E76161",
-                        yellow: "#FED049",
-                        yellowbright: "#FFF6BF",
-                        gray: "#73777B",
-                        graybright: "#EFEFEF",
-                        blue: "#39A2DB",
-                        bluebright: "#B0DAFF",
-                        orange: "#FAAB78",
-                        purple: "#BA94D1"
-                    },
-                    fontFamily: {
-                        poppins: ["Poppins", "sans-serif"],
-                        roboto: ["Roboto", "sans-serif"],
-                        montserrat: ["Montserrat", "sans-serif"],
-                    },
+            extend: {
+                colors: {
+                transparent: "transparent",
+                current: "currentColor",
+                black: "#000000",
+                blackdove: "3C4048",
+                white: "#FFFFFF",
+                green: "#85C88A",
+                red: "#BD4B4B",
+                redbright: "#E76161",
+                yellow: "#FED049",
+                yellowbright: "#FFF6BF",
+                gray: "#73777B",
+                graybright: "#EFEFEF",
+                blue: "#39A2DB",
+                bluebright: "#B0DAFF",
+                orange: "#FAAB78",
+                purple: "#BA94D1",
                 },
-                screens: {
-                    mobile: "360px",
-                    tablet: "768px",
-                    desktop: "1280px",
-                    wide: "1537px",
+                fontFamily: {
+                poppins: ["Poppins", "sans-serif"],
+                roboto: ["Roboto", "sans-serif"],
+                montserrat: ["Montserrat", "sans-serif"],
                 },
-            }
-        }
-      </script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-      {% block meta %}{% endblock %}
+            },
+            screens: {
+                mobile: "360px",
+                tablet: "768px",
+                desktop: "1280px",
+                wide: "1537px",
+            },
+            },
+        };
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    {% block meta %}{% endblock %}
 </head>    
 <!-- CHILD COMPONENT -->
-{% include "components/navbar/navbar.html" %}
+{% include "components/navbar/navbar_umpire.html" %}
 <body>
     <div class="font-poppins">
         {% block content %}{% endblock %}
