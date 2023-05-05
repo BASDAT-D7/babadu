@@ -20,7 +20,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
 
     path('', include('dashboard.urls')),
-    path('auth/', include('auth.urls')),
+    path('authentication/', include('authentication.urls')),
     path('daftar-atlet', include('daftar_atlet.urls')),
     path('daftar-event/', include('daftar_event.urls')),
     path('daftar-sponsor/', include('daftar_sponsor.urls')),
