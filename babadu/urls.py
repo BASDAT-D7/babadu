@@ -1,4 +1,4 @@
-"""badminton URL Configuration
+"""babadu URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.1/topics/http/urls/
@@ -14,8 +14,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+
+    path('', include('dashboard.urls')),
+    path('auth/', include('auth.urls')),
+    path('daftar-atlet', include('daftar_atlet.urls')),
+    path('daftar-event/', include('daftar_event.urls')),
+    path('daftar-sponsor/', include('daftar_sponsor.urls')),
+    path('enrolled-event/', include('enrolled_event.urls')),
+    path('hasil-pertandingan/', include('hasil_pertandingan.urls')),
+    path('lihat-event/', include('lihat_event.urls')),
+    path('list-atlet/', include('list_atlet.urls')),
+    path('tes-kualifikasi/', include('tes_kualifikasi.urls')),
 ]

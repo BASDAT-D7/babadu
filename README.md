@@ -1,4 +1,4 @@
-BADMINTON
+BABADU
 
 KELOMPOK D7 👨‍💻👩‍💻
 - Eugenius Mario Situmorang (2106750484)
