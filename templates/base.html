@@ -27,11 +27,13 @@
                         white: "#FFFFFF",
                         green: "#85C88A",
                         red: "#BD4B4B",
+                        redbright: "#E76161",
                         yellow: "#FED049",
                         yellowbright: "#FFF6BF",
                         gray: "#73777B",
                         graybright: "#EFEFEF",
                         blue: "#39A2DB",
+                        bluebright: "#B0DAFF",
                         orange: "#FAAB78",
                         purple: "#BA94D1"
                     },
@@ -54,6 +56,7 @@
       {% block meta %}{% endblock %}
 </head>    
 <!-- CHILD COMPONENT -->
+{% include "components/navbar/navbar.html" %}
 <body>
     <div class="font-poppins">
         {% block content %}{% endblock %}
