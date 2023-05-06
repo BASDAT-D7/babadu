@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Daftar Event</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="bg-gradient-to-bl from-indigo-500/20 pt-28 pb-96 h-full">
+    <div class="flex gap-10 justify-center">
+        <h1 class="flex justify-center shadow-2xl text-4xl text-white mb-10">Daftar Event</h1>
+    </div>  
+    <div class="flex gap-10 justify-center">
+        <div class="grid grid-cols-4 gap-y-6 gap-x-24 bg-gray/20 text-white shadow-inner border-white rounded-3xl py-12 px-16 items-center">
+            <p class="text-blue font-bold">Nama Stadium</p>
+            <p class="text-blue font-bold">Negara</p>
+            <p class="text-blue font-bold">Kapasitas</p>
+            <p class="text-blue font-bold"></p>
+            {% for event in daftar_event %}
+                <p>{{ event.nama_stadium }}</p>
+                <p>{{ event.negara }}</p>
+                <p>{{ event.kapasitas }}</p>
+                <button class="border-2 border-blue text-blue rounded-xl py-2 px-6 hover:bg-blue hover:text-black duration-200"><a href="/daftar-event/stadium/{{ event.id }}">Pilih</a></button>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
