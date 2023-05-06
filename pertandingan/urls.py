@@ -1,8 +1,10 @@
 from django.urls import path
-# from lihat_event.views import *
+from pertandingan.views import *
 
 app_name = 'pertandingan'
 
 urlpatterns = [
-    # path('', lihat_event, name='lihat_event'),
+    path('', perempat_final, name='perempat_final'),
+    path('semifinal/', semifinal, name='semifinal'),
+    path('final/', final, name='final')
 ]
