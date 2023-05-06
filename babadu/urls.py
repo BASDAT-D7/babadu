@@ -28,5 +28,6 @@ urlpatterns = [
     path('hasil-pertandingan/', include('hasil_pertandingan.urls')),
     path('lihat-event/', include('lihat_event.urls')),
     path('list-atlet/', include('list_atlet.urls')),
+    path('pertandingan/', include('pertandingan.urls')),
     path('tes-kualifikasi/', include('tes_kualifikasi.urls')),
 ]

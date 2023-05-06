@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "hasil_pertandingan",
     "lihat_event",
     "list_atlet",
+    "pertandingan",
     "tes_kualifikasi",
 ]
 
