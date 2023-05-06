@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Form Data Kualifikasi</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="bg-gradient-to-bl from-indigo-500/20 pt-48 h-screen">
+    <div class="flex justify-center">
+        <div class="bg-gray/20 text-white shadow-2xl border-white rounded-3xl pt-8 px-24">
+            <h1 class="flex justify-center text-4xl mb-10">Form Data Kualifikasi</h1>
+            <div class="text-black">
+                <div class="py-2">
+                    <label class="text-white">Nomor Batch</label><br>
+                    <input type="text" class="rounded-xl w-96 p-1"/>
+                </div>
+                <div class="py-2">
+                    <label class="text-white">Tempat Pelaksanaan</label><br>
+                    <select name="tempat_pelaksanaan" id="tempat_pelaksanaan=" class="rounded-xl w-96 p-1">
+                        {% for tempat in tempat_pelaksanaan %}
+                            <option value="{{ tempat }}">{{ tempat }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="py-2">
+                    <label class="text-white">Tanggal Pelaksanaan</label><br>
+                    <select name="tempat_pelaksanaan" id="tempat_pelaksanaan=" class="rounded-xl w-96 p-1">
+                        {% for tanggal in tanggal_pelaksanaan %}
+                            <option value="{{ tanggal }}">{{ tanggal }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            <div class="flex justify-center gap-5 my-10">
+                <button class="border-2 border-blue text-blue rounded-xl py-2 px-6 hover:bg-blue hover:text-black duration-200"><a href="/tes-kualifikasi/pertanyaan/">Next</a></button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
