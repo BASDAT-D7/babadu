@@ -5,6 +5,6 @@ app_name = 'daftar_event'
 
 urlpatterns = [
     path('', daftar_stadium, name='daftar_event'),
-    path('stadium/<int:id>/', daftar_event_by_stadium, name='daftar_event_by_stadium'),
-    path('stadium/<int:id>/kategori/', daftar_kategori, name="daftar_kategori")
+    path('stadium/<int:stadium_id>/', daftar_event_by_stadium, name='daftar_event_by_stadium'),
+    path('stadium/<int:stadium_id>/event/<int:event_id>/', daftar_kategori, name="daftar_kategori")
 ]

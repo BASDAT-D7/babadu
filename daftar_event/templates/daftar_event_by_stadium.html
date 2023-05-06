@@ -25,7 +25,7 @@
                 <p>{{ event.kategori }}</p>
                 <p>{{ event.kapasitas_terisi }}/{{ event.kapasitas_total }}</p>
                 {% if event.kapasitas_terisi < event.kapasitas_total %}
-                    <button class="border-2 border-blue text-blue rounded-xl py-2 px-6 hover:bg-blue hover:text-black duration-200"><a href="/daftar-event/stadium/{{ event.id }}/kategori/">Pilih</a></button>
+                    <button class="border-2 border-blue text-blue rounded-xl py-2 px-6 hover:bg-blue hover:text-black duration-200"><a href="/daftar-event/stadium/{{ stadium_id }}/event/{{ event.id }}/">Pilih</a></button>
                 {% else %}
                     <button class="border-2 border-red rounded-xl py-2 px-6 bg-red text-black" disabled>Penuh</button>
                 {% endif %}

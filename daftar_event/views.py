@@ -32,8 +32,9 @@ def daftar_stadium(request):
     }
     return render(request, 'daftar_stadium.html', dummy_daftar_stadium)
 
-def daftar_event_by_stadium(request, id):
+def daftar_event_by_stadium(request, stadium_id):
     dummy_daftar_event = {
+        'stadium_id': stadium_id,
         'daftar_event': [
             {
                 'id': 1,
@@ -84,7 +85,7 @@ def daftar_event_by_stadium(request, id):
     }
     return render(request, 'daftar_event_by_stadium.html', dummy_daftar_event)
 
-def daftar_kategori(request, id):
+def daftar_kategori(request, stadium_id, event_id):
     dummy_daftar_event = {
         'daftar_event': [
             {
