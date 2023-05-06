@@ -18,7 +18,18 @@ def dashboard_atlet(request):
     return render(request, 'dashboard_atlet.html', dummy_atlet)
 
 def dashboard_pelatih(request):
-    return render(request, 'dashboard_pelatih.html')
+    dummy_pelatih = {
+        "nama_lengkap": "Richard Feynman",
+        "negara": "Indonesia",
+        "email": "richardfeynman@gmail.com",
+        "spesialisasi_kategori": [
+            "Tunggal Putra",
+            "Ganda Putra",
+            "Ganda Campuran",
+        ],
+        "tanggal_mulai": "6 Mei 2023",
+    }
+    return render(request, 'dashboard_pelatih.html', dummy_pelatih)
 
 def dashboard_umpire(request):
     return render(request, 'dashboard_umpire.html')
