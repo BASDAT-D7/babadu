@@ -1,3 +1,8 @@
+from django.urls import path
+from daftar_sponsor.views import *
+
 app_name = 'daftar_sponsor'
 
-urlpatterns = []
+urlpatterns = [
+    path('', daftar_sponsor, name='daftar_sponsor'),
+]

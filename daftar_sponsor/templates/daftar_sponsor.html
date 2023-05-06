@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Daftar Sponsor</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="bg-gradient-to-bl from-indigo-500/20 pt-48 h-screen">
+    <div class="flex justify-center">
+        <div class="bg-gray/20 text-white shadow-2xl border-white rounded-3xl pt-8 px-24">
+            <h1 class="flex justify-center text-4xl mb-10">Daftar Sponsor</h1>
+            <div class="text-black">
+                <div class="py-2">
+                    <label class="text-white">Nama Sponsor</label><br>
+                    <select name="sponsor" id="sponsor" class="rounded-xl w-96 p-1">
+                        {% for sponsor in daftar_sponsor %}
+                            <option value="{{ sponsor.nama_sponsor }}">{{ sponsor.nama_sponsor }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="py-2">
+                    <label class="text-white">Tanggal Mulai</label><br>
+                    <input type="date" id="tanggal_mulai" name="tanggal_mulai" class="rounded-xl w-96 p-1">
+                </div>
+                <div class="py-2">
+                    <label class="text-white">Tanggal Selesai</label><br>
+                    <input type="date" id="tanggal_selesai" name="tanggal_selesai" class="rounded-xl w-96 p-1">
+                </div>
+            <div class="flex justify-center gap-5 my-10">
+                <button class="border-2 border-green text-green rounded-xl py-2 px-6 hover:bg-green hover:text-black duration-200"><a href="/daftar-sponsor/">Submit</a></button>
+                <button class="border-2 border-graybright text-graybright rounded-xl py-2 px-6 hover:bg-graybright hover:text-black duration-200"><a href="javascript:history.go(-1)">Back</a></button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
