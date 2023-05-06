@@ -1,3 +1,8 @@
+from django.urls import path
+from enrolled_event.views import *
+
 app_name = 'enrolled_event'
 
-urlpatterns = []
+urlpatterns = [
+    path('', enrolled_event, name='enrolled_event'),
+]
