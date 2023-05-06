@@ -21,8 +21,9 @@ def form_data_kualifikasi(request):
 
 def pertanyaan_kualifikasi(request):
     dummy_pertanyaan = {
-        "pertanyaan": [
+        "pertanyaan_kualifikasi": [
             {
+                "nomor": 1,
                 "pertanyaan": "Apakah anda pernah mengikuti kejuaraan bulutangkis sebelumnya?",
                 "jawaban": [
                     "Ya",
@@ -30,6 +31,7 @@ def pertanyaan_kualifikasi(request):
                 ]
             },
             {
+                "nomor": 2,
                 "pertanyaan": "Bagaimana hasil kejuaraan bulutangkis sebelumnya?",
                 "jawaban": [
                     "Juara",
@@ -40,6 +42,7 @@ def pertanyaan_kualifikasi(request):
                 ]
             },
             {
+                "nomor": 3,
                 "pertanyaan": "Mengapa anda ingin mengikuti kejuaraan bulutangkis ini?",
                 "jawaban": [
                     "Untuk mengasah kemampuan",
@@ -49,6 +52,7 @@ def pertanyaan_kualifikasi(request):
                 ]
             },
             {
+                "nomor": 4,
                 "pertanyaan": "Berapa lama anda bermain bulutangkis?",
                 "jawaban": [
                     "Kurang dari 1 tahun",
