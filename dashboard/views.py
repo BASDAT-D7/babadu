@@ -32,4 +32,9 @@ def dashboard_pelatih(request):
     return render(request, 'dashboard_pelatih.html', dummy_pelatih)
 
 def dashboard_umpire(request):
-    return render(request, 'dashboard_umpire.html')
+    dummy_umpire = {
+        "nama_lengkap": "Dek Depe",
+        "negara": "Indonesia",
+        "email": "dekdepe@gmail.com"
+    }
+    return render(request, 'dashboard_umpire.html', dummy_umpire)

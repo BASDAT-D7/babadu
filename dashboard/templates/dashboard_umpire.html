@@ -2,13 +2,13 @@
 {% load static %}
 
 {% block meta %}
-<title>Dashboard</title>
+<title>Dashboard Umpire</title>
 {% endblock meta %}
 
 {% block content %}
-<div class="bg-gradient-to-bl from-indigo-500/20 pt-12 h-screen">
+<div class="bg-gradient-to-bl from-indigo-500/20 pt-48 h-screen">
     <div class="flex gap-10 justify-center">
-        <h1 class="flex justify-center shadow-2xl text-4xl text-white mb-10">Dashboard Atlet</h1>
+        <h1 class="flex justify-center shadow-2xl text-4xl text-white mb-10">Dashboard Umpire</h1>
     </div>  
     <div class="flex gap-10 justify-center">
         <div class="grid grid-cols-2 gap-y-6 gap-x-24 bg-gray/20 text-white shadow-inner border-white rounded-3xl py-12 px-16">
@@ -23,46 +23,6 @@
             <div>
                 <p class="text-sm opacity-50">Email</p>
                 <p>{{ email }}</p>
-            </div>
-            <div>
-                <p class="text-sm opacity-50">Tanggal Lahir</p>
-                <p>{{ tanggal_lahir }}</p>
-            </div>
-            <div>
-                <p class="text-sm opacity-50">Play</p>
-                <p>{{ play }}</p>
-            </div>
-            <div>
-                <p class="text-sm opacity-50">Tinggi Badan</p>
-                <p>{{ tinggi_badan }}</p>
-            </div>
-            <div>
-                <p class="text-sm opacity-50">Jenis Kelamin</p>
-                <p>{{ jenis_kelamin }}</p>
-            </div>
-            <div>
-                <p class="text-sm opacity-50">Pelatih</p>
-                <p>{{ pelatih }}</p>
-            </div>
-            <div>
-                <p class="text-sm opacity-50">Status</p>
-                <div class="items-center">
-                {% if status == "Qualified" %}
-                    <i class="fa-sharp fa-solid fa-circle-check text-green text-16"></i>
-                    <span class="text-green">{{ status }}</span>
-                {% else %}
-                    <i class="fa-sharp fa-solid fa-circle-xmark text-red text-16"></i>
-                    <span class="text-red">{{ status }}</span>
-                {% endif %}
-                </div>
-            </div>
-            <div>
-                <p class="text-sm opacity-50">World Rank</p>
-                <p>{{ world_rank }}</p>
-            </div>
-            <div>
-                <p class="text-sm opacity-50">Total Poin</p>
-                <p>{{ total_poin }}</p>
             </div>
         </div>  
     </div>
