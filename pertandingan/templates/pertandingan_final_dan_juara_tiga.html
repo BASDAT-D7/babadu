@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Pertandingan Semifinal</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="bg-gradient-to-bl from-indigo-500/20 pt-28 pb-96 h-full">
+    <div class="flex gap-10 justify-center">
+        <div>
+            <h1 class="flex justify-center text-4xl text-white mb-5">Pertandingan Juara 3</h1>
+            <h1 class="flex justify-center text-4xl text-red mb-10">00:00</h1>
+        </div>  
+    </div>  
+    <div class="flex gap-10 justify-center">
+        <div class="grid grid-cols-4 gap-y-6 gap-x-24 bg-gray/20 text-white shadow-inner border-white rounded-3xl py-12 px-16 items-center mx-10">
+            <p class="text-blue font-bold">Tim 1</p>
+            <p class="text-blue font-bold">Tim 2</p>
+            <p class="text-blue font-bold">Skor Tim 1</p>
+            <p class="text-blue font-bold">Skor Tim 2</p>
+            {% for pertandingan in perebutan_juara_tiga %}
+                <p>{{ pertandingan.tim_1 }}</p>
+                <p>{{ pertandingan.tim_2 }}</p>
+                <div class="flex gap-3 items-center">
+                    <button class="border-2 border-red text-red rounded-full py-1 px-3 hover:bg-red hover:text-black duration-200"><a href="">-</a></button>
+                    <p>{{ pertandingan.skor_tim_1 }}</p>
+                    <button class="border-2 border-green text-green rounded-full py-1 px-3 hover:bg-green hover:text-black duration-200"><a href="">+</a></button>
+                </div>
+                <div class="flex gap-3 items-center">
+                    <button class="border-2 border-red text-red rounded-full py-1 px-3 hover:bg-red hover:text-black duration-200"><a href="">-</a></button>
+                    <p>{{ pertandingan.skor_tim_2 }}</p>
+                    <button class="border-2 border-green text-green rounded-full py-1 px-3 hover:bg-green hover:text-black duration-200"><a href="">+</a></button>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="flex gap-10 justify-center">
+        <div>
+            <h1 class="flex justify-center text-4xl text-white m-5">Pertandingan Final</h1>
+            <h1 class="flex justify-center text-4xl text-red mb-10">00:00</h1>
+        </div>  
+    </div>  
+    <div class="flex gap-10 justify-center">
+        <div class="grid grid-cols-4 gap-y-6 gap-x-24 bg-gray/20 text-white shadow-inner border-white rounded-3xl py-12 px-16 items-center mx-10">
+            <p class="text-blue font-bold">Tim 1</p>
+            <p class="text-blue font-bold">Tim 2</p>
+            <p class="text-blue font-bold">Skor Tim 1</p>
+            <p class="text-blue font-bold">Skor Tim 2</p>
+            {% for pertandingan in final %}
+                <p>{{ pertandingan.tim_1 }}</p>
+                <p>{{ pertandingan.tim_2 }}</p>
+                <div class="flex gap-3 items-center">
+                    <button class="border-2 border-red text-red rounded-full py-1 px-3 hover:bg-red hover:text-black duration-200"><a href="">-</a></button>
+                    <p>{{ pertandingan.skor_tim_1 }}</p>
+                    <button class="border-2 border-green text-green rounded-full py-1 px-3 hover:bg-green hover:text-black duration-200"><a href="">+</a></button>
+                </div>
+                <div class="flex gap-3 items-center">
+                    <button class="border-2 border-red text-red rounded-full py-1 px-3 hover:bg-red hover:text-black duration-200"><a href="">-</a></button>
+                    <p>{{ pertandingan.skor_tim_2 }}</p>
+                    <button class="border-2 border-green text-green rounded-full py-1 px-3 hover:bg-green hover:text-black duration-200"><a href="">+</a></button>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="flex justify-center gap-5 my-10">
+        <button class="border-2 border-green text-green rounded-xl py-2 px-6 hover:bg-green hover:text-black duration-200"><a href="/hasil-pertandingan/">Done</a></button>
+    </div>
+</div>
+{% endblock content %}

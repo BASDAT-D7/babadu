@@ -58,4 +58,24 @@ def semifinal(request):
     return render(request, 'pertandingan_semifinal.html', dummy_semifinal)
 
 def final(request):
-    return render(request, 'pertandingan_final.html')
+    dummy_final = {
+        'perebutan_juara_tiga': [
+            {
+                'id': 2,
+                'tim_1': 'D',
+                'tim_2': 'E',
+                'skor_tim_1': 1,
+                'skor_tim_2': 0
+            },
+        ],
+        'final': [
+            {
+                'id': 1,
+                'tim_1': 'A',
+                'tim_2': 'G',
+                'skor_tim_1': 1,
+                'skor_tim_2': 0
+            },
+        ]
+    }
+    return render(request, 'pertandingan_final_dan_juara_tiga.html', dummy_final)
