@@ -27,7 +27,7 @@ def login(request):
     if len(result) != 0:
       user_id = result[0][0]
       user_role = role(result[0][0])
-      response = HttpResponseRedirect(reverse("dashboard:dashboard_atlet"))
+      response = HttpResponseRedirect(reverse("dashboard:dashboard"))
       # SET COOKIES
       response.set_cookie('user_id', user_id)
       response.set_cookie('user_role', user_role)
