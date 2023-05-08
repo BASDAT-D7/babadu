@@ -3,6 +3,8 @@
 
 {% block meta %}
 <title>Register Umpire</title>
+<!-- load javascript -->
+<script src="{% static 'authentication.js' %}"></script>
 {% endblock meta %}
 
 {% block content %}
@@ -10,23 +12,27 @@
     <div class="flex justify-center">
         <div class="bg-gray/20 text-white shadow-2xl border-white rounded-3xl pt-8 px-24">
             <h1 class="flex justify-center text-4xl mb-10">Register Umpire</h1>
-            <div class="text-black">
-                <div class="py-2">
-                    <label class="text-white">Nama</label><br>
-                    <input type="text" placeholder="Masukkan nama Anda" class="rounded-xl w-64 p-1"/>
-                </div>
-                <div class="py-2">
-                    <label class="text-white">Email</label><br>
-                    <input type="text" placeholder="example@gmail.com" class="rounded-xl w-64 p-1"/>
-                </div>
-                <div class="py-2">
-                    <label class="text-white">Negara</label><br>
-                    <input type="text" placeholder="Kewarganegaraan Anda" class="rounded-xl w-64 p-1"/>
-                </div>
-            <div class="flex justify-center gap-5 my-10">
-                <button class="border-2 border-green text-green rounded-xl py-2 px-6 hover:bg-green hover:text-black duration-200"><a href="/authentication/register/umpire/">Register</a></button>
-                <button class="border-2 border-graybright text-graybright rounded-xl py-2 px-6 hover:bg-graybright hover:text-black duration-200"><a href="javascript:history.go(-1)">Cancel</a></button>
-            </div>
+            <form id="register_umpire" method="POST">
+                {% csrf_token %} 
+                <div class="text-black">
+                    <div class="py-2">
+                        <label class="text-white">Nama</label><br>
+                        <input id="nama" name="nama" type="text" placeholder="Masukkan nama Anda" class="rounded-xl w-64 p-1"/>
+                    </div>
+                    <div class="py-2">
+                        <label class="text-white">Email</label><br>
+                        <input id="email" name="email" type="text" placeholder="example@gmail.com" class="rounded-xl w-64 p-1"/>
+                    </div>
+                    <div class="py-2">
+                        <label class="text-white">Negara</label><br>
+                        <input id="negara" name="negara" type="text" placeholder="Kewarganegaraan Anda" class="rounded-xl w-64 p-1"/>
+                    </div>
+                    <div class="flex justify-center gap-5 my-10">
+                        <button onclick="registerUmpire()" class="border-2 border-green text-green rounded-xl py-2 px-6 hover:bg-green hover:text-black duration-200">Register</button>
+                        <button class="border-2 border-graybright text-graybright rounded-xl py-2 px-6 hover:bg-graybright hover:text-black duration-200"><a href="javascript:history.go(-1)">Cancel</a></button>
+                    </div>
+                </div> 
+            </form>
         </div>
     </div>
 </div>

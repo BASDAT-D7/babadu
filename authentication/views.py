@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.shortcuts import render
 from babadu_function.general import *
 from babadu_function.authentication import *
+import uuid
 
 # Create your views here.
 def authentication(request):
@@ -18,6 +19,13 @@ def register_pelatih(request):
   return render(request, 'register_form/register_pelatih.html')
 
 def register_umpire(request):
+  if request.method == "POST":
+    user_id = uuid.uuid4()
+    nama = request.POST.get("nama")
+    email = request.POST.get("email")
+    negara = request.POST.get("negara")
+    query_add(f"INSERT INTO member (id, nama, email) VALUES ('{user_id}', '{nama}', '{email}');")
+    query_add(f"INSERT INTO umpire (id, negara) VALUES ('{user_id}', '{negara}')")
   return render(request, 'register_form/register_umpire.html')
 
 def login(request):
