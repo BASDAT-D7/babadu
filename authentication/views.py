@@ -28,8 +28,10 @@ def login(request):
       user_id = result[0][0]
       user_role = role(result[0][0])
       response = HttpResponseRedirect(reverse("dashboard:dashboard_atlet"))
+      # SET COOKIES
       response.set_cookie('user_id', user_id)
       response.set_cookie('user_role', user_role)
+      response.set_cookie('is_authenticated', True)
       return response
     else:
       print("MEMBER NOT FOUND")
@@ -39,5 +41,6 @@ def logout(request):
   response = HttpResponseRedirect(reverse('authentication:login'))
   response.delete_cookie('user_id')
   response.delete_cookie('user_role')
+  response.delete_cookie('is_authenticated')
   return response
 
