@@ -18,11 +18,13 @@ def register_umpire(request):
   return render(request, 'register_form/register_umpire.html')
 
 def login(request):
-  with connection.cursor() as cursor:
-      cursor.execute("SELECT * FROM member;")
-      members = cursor.fetchall()
-
-      print(members)
+  if request.method == "POST":
+    nama = request.POST.get("nama")
+    email = request.POST.get("email")
+    with connection.cursor() as cursor:
+        cursor.execute(f"SELECT * FROM member WHERE email='{email}';")
+        members = cursor.fetchall()
+        print(members)
 
   return render(request, 'login.html')
 
