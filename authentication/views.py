@@ -14,6 +14,7 @@ def register(request):
 
 def register_atlet(request):
   if request.method == "POST":
+    # GET DATA
     user_id = uuid.uuid4()
     nama = request.POST.get("nama")
     email = request.POST.get("email")
@@ -22,29 +23,44 @@ def register_atlet(request):
     tinggi_badan = request.POST.get("tinggi_badan")
     jenis_kelamin = request.POST.get("jenis_kelamin")
     play = request.POST.get("play")
+    # INSERT DATA
     query_add(f"INSERT INTO member (id, nama, email) VALUES ('{user_id}', '{nama}', '{email}');")
     query_add(f"INSERT INTO atlet (id, tgl_lahir, negara_asal, play_right, height, world_rank, jenis_kelamin) VALUES ('{user_id}', '{tanggal_lahir}', '{negara}', {play}, {tinggi_badan}, NULL, {jenis_kelamin});")
+    # REDIRECT
     response = HttpResponseRedirect(reverse("dashboard:dashboard"))
     return response
   return render(request, 'register_form/register_atlet.html')
 
 def register_pelatih(request):
-  return render(request, 'register_form/register_pelatih.html')
-
-def register_umpire(request):
   if request.method == "POST":
+    # GET DATA
     user_id = uuid.uuid4()
     nama = request.POST.get("nama")
     email = request.POST.get("email")
     negara = request.POST.get("negara")
+    tanggal_mulai = request.POST.get("tanggal_mulai")
+    kategori = request.POST.get("kategori")
+    print(kategori)
+  return render(request, 'register_form/register_pelatih.html')
+
+def register_umpire(request):
+  if request.method == "POST":
+    # GET DATA
+    user_id = uuid.uuid4()
+    nama = request.POST.get("nama")
+    email = request.POST.get("email")
+    negara = request.POST.get("negara")
+    # INSERT DATA
     query_add(f"INSERT INTO member (id, nama, email) VALUES ('{user_id}', '{nama}', '{email}');")
     query_add(f"INSERT INTO umpire (id, negara) VALUES ('{user_id}', '{negara}')")
+    # REDIRECT
     response = HttpResponseRedirect(reverse("dashboard:dashboard"))
     return response
   return render(request, 'register_form/register_umpire.html')
 
 def login(request):
   if request.method == "POST":
+    # GET DATA
     email = request.POST.get("email")
     result = query_result(f"SELECT * FROM member WHERE email='{email}';")
     if len(result) != 0:
@@ -55,12 +71,14 @@ def login(request):
       response.set_cookie('user_id', user_id)
       response.set_cookie('user_role', user_role)
       response.set_cookie('is_authenticated', True)
+      # REDIRECT
       return response
     else:
       print("MEMBER NOT FOUND")
   return render(request, 'login.html')
 
 def logout(request):
+  # DELETE COOKIES
   response = HttpResponseRedirect(reverse('authentication:login'))
   response.delete_cookie('user_id')
   response.delete_cookie('user_role')

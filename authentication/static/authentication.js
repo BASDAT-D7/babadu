@@ -10,19 +10,31 @@ function login() {
   });
 }
 
-function register_atlet() {
-  const register_umpire = $("#register_umpire");
+function registerAtlet() {
+  const register_atlet = $("#register_atlet");
 
   $.ajax({
     type: "POST",
-    url: "/authentication/register/umpire/",
-    data: register_umpire.serialize(),
+    url: "/authentication/register/atlet/",
+    data: register_atlet.serialize(),
   }).done(function (data) {
-    register_umpire.trigger("reset");
+    register_atlet.trigger("reset");
   });
 }
 
-function register_umpire() {
+function registerPelatih() {
+  const register_pelatih = $("#register_pelatih");
+
+  $.ajax({
+    type: "POST",
+    url: "/authentication/register/pelatih/",
+    data: register_pelatih.serialize(),
+  }).done(function (data) {
+    register_pelatih.trigger("reset");
+  });
+}
+
+function registerUmpire() {
   const register_umpire = $("#register_umpire");
 
   $.ajax({

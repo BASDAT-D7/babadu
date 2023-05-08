@@ -3,6 +3,8 @@
 
 {% block meta %}
 <title>Register Pelatih</title>
+<!-- load javascript -->
+<script src="{% static 'authentication.js' %}"></script>
 {% endblock meta %}
 
 {% block content %}
@@ -10,48 +12,51 @@
     <div class="flex justify-center">
         <div class="bg-gray/20 text-white shadow-2xl border-white rounded-3xl pt-8 px-24">
             <h1 class="flex justify-center text-4xl mb-10">Register Pelatih</h1>
-            <div class="text-black">
-                <div class="flex gap-10">
-                    <div class="py-2">
-                        <label class="text-white">Nama</label><br>
-                        <input type="text" placeholder="Masukkan nama Anda" class="rounded-xl w-64 p-1"/>
+            <form id="register_pelatih" method="POST">
+                {% csrf_token %} 
+                <div class="text-black">
+                    <div class="flex gap-10">
+                        <div class="py-2">
+                            <label class="text-white">Nama</label><br>
+                            <input id="nama" name="nama" type="text" placeholder="Masukkan nama Anda" class="rounded-xl w-64 p-1"/>
+                        </div>
+                        <div class="py-2">
+                            <label class="text-white">Email</label><br>
+                            <input id="email" name="email" type="text" placeholder="example@gmail.com" class="rounded-xl w-64 p-1"/>
+                        </div>
+                    </div>
+                    <div class="flex gap-10">
+                        <div class="py-2">
+                            <label class="text-white">Negara</label><br>
+                            <input id="negara" name="negara" type="text" placeholder="Kewarganegaraan Anda" class="rounded-xl w-64 p-1"/>
+                        </div>
+                        <div class="py-2">
+                            <label class="text-white">Tanggal Mulai</label><br>
+                            <input id="tanggal_mulai" name="tanggal_mulai" type="date" id="tanggal_mulai" name="tanggal_mulai" class="rounded-xl w-64 p-1">
+                        </div>
                     </div>
                     <div class="py-2">
-                        <label class="text-white">Email</label><br>
-                        <input type="text" placeholder="example@gmail.com" class="rounded-xl w-64 p-1"/>
+                        <label class="text-white">Kategori</label><br>
+                        <span class="text-blue text-xs">*Pilihan dapat lebih dari satu</span>
+                        <div class="pt-2 text-white">
+                            <input type="checkbox" id="kategori" name="kategori" value="Tunggal Putra">
+                            <label for="tunggal_putra" class="px-2">Tunggal Putra</label><br>
+                            <input type="checkbox" id="kategori" name="kategori" value="Tunggal Putri">
+                            <label for="tunggal_putri" class="px-2">Tunggal Putri</label><br>
+                            <input type="checkbox" id="kategori" name="kategori" value="Ganda Putra">
+                            <label for="ganda_putra" class="px-2">Ganda Putra</label><br>
+                            <input type="checkbox" id="kategori" name="kategori" value="Ganda Putri">
+                            <label for="ganda_putri" class="px-2">Ganda Putri</label><br>
+                            <input type="checkbox" id="kategori" name="kategori" value="Ganda Campuran">
+                            <label for="ganda_campuran" class="px-2">Ganda Campuran</label><br>
+                        </div>
                     </div>
                 </div>
-                <div class="flex gap-10">
-                    <div class="py-2">
-                        <label class="text-white">Negara</label><br>
-                        <input type="text" placeholder="Kewarganegaraan Anda" class="rounded-xl w-64 p-1"/>
-                    </div>
-                    <div class="py-2">
-                        <label class="text-white">Tanggal Mulai</label><br>
-                        <input type="date" id="tanggal_mulai" name="tanggal_mulai" class="rounded-xl w-64 p-1">
-                    </div>
+                <div class="flex justify-center gap-5 my-10">
+                    <button onclick="registerPelatih()" class="border-2 border-green text-green rounded-xl py-2 px-6 hover:bg-green hover:text-black duration-200">Register</button>
+                    <button class="border-2 border-graybright text-graybright rounded-xl py-2 px-6 hover:bg-graybright hover:text-black duration-200"><a href="javascript:history.go(-1)">Cancel</a></button>
                 </div>
-                <div class="py-2">
-                    <label class="text-white">Kategori</label><br>
-                    <span class="text-blue text-xs">*Pilihan dapat lebih dari satu</span>
-                    <div class="pt-2 text-white">
-                        <input type="checkbox" id="tunggal_putra" name="tunggal_putra" value="Tunggal Putra">
-                        <label for="tunggal_putra" class="px-2">Tunggal Putra</label><br>
-                        <input type="checkbox" id="tunggal_putri" name="tunggal_putri" value="Tunggal Putri">
-                        <label for="tunggal_putri" class="px-2">Tunggal Putri</label><br>
-                        <input type="checkbox" id="ganda_putra" name="ganda_putra" value="Ganda Putra">
-                        <label for="ganda_putra" class="px-2">Ganda Putra</label><br>
-                        <input type="checkbox" id="ganda_putri" name="ganda_putri" value="Ganda Putri">
-                        <label for="ganda_putri" class="px-2">Ganda Putri</label><br>
-                        <input type="checkbox" id="ganda_campuran" name="ganda_campuran" value="Ganda Campuran">
-                        <label for="ganda_campuran" class="px-2">Ganda Campuran</label><br>
-                    </div>
-                </div>
-            </div>
-            <div class="flex justify-center gap-5 my-10">
-                <button class="border-2 border-green text-green rounded-xl py-2 px-6 hover:bg-green hover:text-black duration-200"><a href="/authentication/register/pelatih/">Register</a></button>
-                <button class="border-2 border-graybright text-graybright rounded-xl py-2 px-6 hover:bg-graybright hover:text-black duration-200"><a href="javascript:history.go(-1)">Cancel</a></button>
-            </div>
+            </form> 
         </div>
     </div>
 </div>
