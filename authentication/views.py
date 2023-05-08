@@ -13,6 +13,19 @@ def register(request):
   return render(request, 'register.html')
 
 def register_atlet(request):
+  if request.method == "POST":
+    user_id = uuid.uuid4()
+    nama = request.POST.get("nama")
+    email = request.POST.get("email")
+    negara = request.POST.get("negara")
+    tanggal_lahir = request.POST.get("tanggal_lahir")
+    tinggi_badan = request.POST.get("tinggi_badan")
+    jenis_kelamin = request.POST.get("jenis_kelamin")
+    play = request.POST.get("play")
+    query_add(f"INSERT INTO member (id, nama, email) VALUES ('{user_id}', '{nama}', '{email}');")
+    query_add(f"INSERT INTO atlet (id, tgl_lahir, negara_asal, play_right, height, world_rank, jenis_kelamin) VALUES ('{user_id}', '{tanggal_lahir}', '{negara}', {play}, {tinggi_badan}, NULL, {jenis_kelamin});")
+    response = HttpResponseRedirect(reverse("dashboard:dashboard"))
+    return response
   return render(request, 'register_form/register_atlet.html')
 
 def register_pelatih(request):
@@ -26,6 +39,8 @@ def register_umpire(request):
     negara = request.POST.get("negara")
     query_add(f"INSERT INTO member (id, nama, email) VALUES ('{user_id}', '{nama}', '{email}');")
     query_add(f"INSERT INTO umpire (id, negara) VALUES ('{user_id}', '{negara}')")
+    response = HttpResponseRedirect(reverse("dashboard:dashboard"))
+    return response
   return render(request, 'register_form/register_umpire.html')
 
 def login(request):

@@ -10,53 +10,56 @@
     <div class="flex justify-center">
         <div class="bg-gray/20 text-white shadow-2xl border-white rounded-3xl pt-8 px-24">
             <h1 class="flex justify-center text-4xl mb-10">Register Atlet</h1>
-            <div class="text-black">
-                <div class="flex gap-10">
-                    <div class="py-2">
-                        <label class="text-white">Nama</label><br>
-                        <input type="text" placeholder="Masukkan nama Anda" class="rounded-xl w-64 p-1"/>
+            <form id="register_umpire" method="POST">
+                {% csrf_token %} 
+                <div class="text-black">
+                    <div class="flex gap-10">
+                        <div class="py-2">
+                            <label class="text-white">Nama</label><br>
+                            <input id="nama" name="nama" type="text" placeholder="Masukkan nama Anda" class="rounded-xl w-64 p-1"/>
+                        </div>
+                        <div class="py-2">
+                            <label class="text-white">Email</label><br>
+                            <input id="email" name="email" type="text" placeholder="example@gmail.com" class="rounded-xl w-64 p-1"/>
+                        </div>
+                    </div>
+                    <div class="flex gap-10">
+                        <div class="py-2">
+                            <label class="text-white">Negara</label><br>
+                            <input id="negara" name="negara" type="text" placeholder="Kewarganegaraan Anda" class="rounded-xl w-64 p-1"/>
+                        </div>
+                        <div class="py-2">
+                            <label class="text-white">Tanggal Lahir</label><br>
+                            <input id="tanggal_lahir" name="tanggal_lahir" type="date" id="tanggal_lahir" name="tanggal_lahir" class="rounded-xl w-64 p-1">
+                        </div>
+                    </div>
+                    <div class="flex gap-10">
+                        <div class="py-2">
+                            <label class="text-white">Tinggi Badan</label><br>
+                            <input id="tinggi_badan" name="tinggi_badan" type="text" placeholder="Dalam CM" class="rounded-xl w-64 p-1"/>
+                        </div>
+                        <div class="py-2">
+                            <label class="text-white">Jenis Kelamin</label><br>
+                            <select id="jenis_kelamin" name="jenis_kelamin" class="rounded-xl w-64 p-1">
+                                <option value="TRUE">Laki</option>
+                                <option value="FALSE">Perempuan</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="py-2">
-                        <label class="text-white">Email</label><br>
-                        <input type="text" placeholder="example@gmail.com" class="rounded-xl w-64 p-1"/>
+                        <label class="text-white">Play</label><br>
+                        <input type="radio" id="play" name="play" value="FALSE">
+                        <label class="text-white">Left</label>
+                        <label class="px-2"></label>
+                        <input type="radio" id="play" name="play" value="TRUE">
+                        <label class="text-white">Right</label>
                     </div>
                 </div>
-                <div class="flex gap-10">
-                    <div class="py-2">
-                        <label class="text-white">Negara</label><br>
-                        <input type="text" placeholder="Kewarganegaraan Anda" class="rounded-xl w-64 p-1"/>
-                    </div>
-                    <div class="py-2">
-                        <label class="text-white">Tanggal Lahir</label><br>
-                        <input type="date" id="tanggal_lahir" name="tanggal_lahir" class="rounded-xl w-64 p-1">
-                    </div>
+                <div class="flex justify-center gap-5 my-10">
+                    <button onclick="register_atlet()" class="border-2 border-green text-green rounded-xl py-2 px-6 hover:bg-green hover:text-black duration-200">Register</button>
+                    <button class="border-2 border-graybright text-graybright rounded-xl py-2 px-6 hover:bg-graybright hover:text-black duration-200"><a href="javascript:history.go(-1)">Cancel</a></button>
                 </div>
-                <div class="flex gap-10">
-                    <div class="py-2">
-                        <label class="text-white">Tinggi Badan</label><br>
-                        <input type="text" placeholder="Dalam CM" class="rounded-xl w-64 p-1"/>
-                    </div>
-                    <div class="py-2">
-                        <label class="text-white">Jenis Kelamin</label><br>
-                        <select name="jenis_kelamin" id="jenis_kelamin" class="rounded-xl w-64 p-1">
-                            <option value="Laki">Laki</option>
-                            <option value="Perempuan">Perempuan</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="py-2">
-                    <label class="text-white">Play</label><br>
-                    <input type="radio" id="play" name="play" value="Left">
-                    <label class="text-white">Left</label>
-                    <label class="px-2"></label>
-                    <input type="radio" id="play" name="play" value="Right">
-                    <label class="text-white">Right</label>
-                </div>
-            </div>
-            <div class="flex justify-center gap-5 my-10">
-                <button class="border-2 border-green text-green rounded-xl py-2 px-6 hover:bg-green hover:text-black duration-200"><a href="/authentication/register/atlet/">Register</a></button>
-                <button class="border-2 border-graybright text-graybright rounded-xl py-2 px-6 hover:bg-graybright hover:text-black duration-200"><a href="javascript:history.go(-1)">Cancel</a></button>
-            </div>
+            </form>
         </div>
     </div>
 </div>
