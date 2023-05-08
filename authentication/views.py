@@ -17,6 +17,10 @@ def register_umpire(request):
   return render(request, 'register_form/register_umpire.html')
 
 def login(request):
+  if request.method == "POST":
+    nama = request.POST.get("nama")
+    email = request.POST.get("email")
+    print(nama, email)
   return render(request, 'login.html')
 
 def logout(request):
