@@ -21,7 +21,6 @@ def dashboard(request):
         tinggi_badan = parse(query_result(f"SELECT height FROM atlet WHERE id='{user_id}';"))
         jenis_kelamin = "Laki" if parse(query_result(f"SELECT jenis_kelamin FROM atlet WHERE id='{user_id}';")) else "Perempuan"
         world_rank = "-" if parse(query_result(f"SELECT world_rank FROM atlet WHERE id='{user_id}';")) == None else "#"+parse(query_result(f"SELECT world_rank FROM atlet WHERE id='{user_id}';"))
-
         # SET CONTEXT
         dummy_atlet = {
             "nama_lengkap": nama_lengkap,
@@ -55,9 +54,15 @@ def dashboard(request):
 
     # IF ROLE UMPIRE LOGGED IN
     if request.COOKIES.get('user_role') == "UMPIRE":
+         # QUERY DATABASE
+        user_id = request.COOKIES.get('user_id')
+        nama_lengkap = parse(query_result(f"SELECT nama FROM member WHERE id='{user_id}';"))
+        negara = parse(query_result(f"SELECT negara FROM umpire WHERE id='{user_id}';"))
+        email = parse(query_result(f"SELECT email FROM member WHERE id='{user_id}';"))
+        # SET CONTEXT
         dummy_umpire = {
-            "nama_lengkap": "Dek Depe",
-            "negara": "Indonesia",
-            "email": "dekdepe@gmail.com"
+            "nama_lengkap": nama_lengkap,
+            "negara": negara,
+            "email": email
         }
         return render(request, 'dashboard_umpire.html', dummy_umpire)
