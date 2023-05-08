@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.db import connection
 
 # Create your views here.
 def authentication(request):
@@ -17,10 +18,12 @@ def register_umpire(request):
   return render(request, 'register_form/register_umpire.html')
 
 def login(request):
-  if request.method == "POST":
-    nama = request.POST.get("nama")
-    email = request.POST.get("email")
-    print(nama, email)
+  with connection.cursor() as cursor:
+      cursor.execute("SELECT * FROM member;")
+      members = cursor.fetchall()
+
+      print(members)
+
   return render(request, 'login.html')
 
 def logout(request):
