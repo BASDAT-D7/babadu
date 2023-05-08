@@ -19,14 +19,33 @@ def register_umpire(request):
 
 def login(request):
   if request.method == "POST":
-    nama = request.POST.get("nama")
     email = request.POST.get("email")
-    with connection.cursor() as cursor:
-        cursor.execute(f"SELECT * FROM member WHERE email='{email}';")
-        members = cursor.fetchall()
-        print(members)
+    result = query_result(f"SELECT * FROM member WHERE email='{email}';")
+    if len(result) != 0:
+      print(result)
+      print(role(result[0][0]))
+    else:
+      print("member not found")
 
   return render(request, 'login.html')
 
 def logout(request):
   return render(request, 'logout.html')
+
+def query_result(query):
+  with connection.cursor() as cursor:
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+
+def role(member_id):
+  result = query_result(f"SELECT * FROM umpire WHERE id='{member_id}';")
+  if len(result) != 0:
+    return "umpire"
+  result = query_result(f"SELECT * FROM pelatih WHERE id='{member_id}';")
+  if len(result) != 0:
+    return "pelatih"
+  result = query_result(f"SELECT * FROM atlet WHERE id='{member_id}';")
+  if len(result) != 0:
+    return "atlet"
+  return "role for this member is not found"
