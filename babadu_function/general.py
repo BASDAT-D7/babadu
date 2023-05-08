@@ -5,3 +5,8 @@ def query_result(query):
     cursor.execute(query)
     result = cursor.fetchall()
     return result
+
+def parse(result):
+    data = result[0][0]
+    return data
+

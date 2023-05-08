@@ -12,6 +12,11 @@ def role(member_id):
         return "ATLET"
     return "NONE"
 
+def is_authenticated(request):
+    if request.COOKIES.get('is_authenticated') == "True":
+        return True
+    return False
+
 def get_current_user(request):
     user_id = request.COOKIES.get('user_id')
     user_role = request.COOKIES.get('user_role')
