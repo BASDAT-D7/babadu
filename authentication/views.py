@@ -1,5 +1,8 @@
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.shortcuts import render
-from django.db import connection
+from babadu_function.general import *
+from babadu_function.authentication import *
 
 # Create your views here.
 def authentication(request):
@@ -22,30 +25,19 @@ def login(request):
     email = request.POST.get("email")
     result = query_result(f"SELECT * FROM member WHERE email='{email}';")
     if len(result) != 0:
-      print(result)
-      print(role(result[0][0]))
+      user_id = result[0][0]
+      user_role = role(result[0][0])
+      response = HttpResponseRedirect(reverse("dashboard:dashboard_atlet"))
+      response.set_cookie('user_id', user_id)
+      response.set_cookie('user_role', user_role)
+      return response
     else:
-      print("member not found")
-
+      print("MEMBER NOT FOUND")
   return render(request, 'login.html')
 
 def logout(request):
-  return render(request, 'logout.html')
+  response = HttpResponseRedirect(reverse('authentication:login'))
+  response.delete_cookie('user_id')
+  response.delete_cookie('user_role')
+  return response
 
-def query_result(query):
-  with connection.cursor() as cursor:
-    cursor.execute(query)
-    result = cursor.fetchall()
-    return result
-
-def role(member_id):
-  result = query_result(f"SELECT * FROM umpire WHERE id='{member_id}';")
-  if len(result) != 0:
-    return "umpire"
-  result = query_result(f"SELECT * FROM pelatih WHERE id='{member_id}';")
-  if len(result) != 0:
-    return "pelatih"
-  result = query_result(f"SELECT * FROM atlet WHERE id='{member_id}';")
-  if len(result) != 0:
-    return "atlet"
-  return "role for this member is not found"
