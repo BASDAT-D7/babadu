@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "babadu_migration",
     "authentication",
     "daftar_atlet",
     "daftar_event",
@@ -85,14 +86,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "babadu.wsgi.application"
 
-
+# DEFAULT DATABASE
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 
+# POSTGRESQL DATABASE
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'babadu',
+        'USER': 'postgres',
+        'PASSWORD': 'Mario13052002',
+        'HOST': 'localhost',
+        'PORT': '5433',
     }
 }
 
