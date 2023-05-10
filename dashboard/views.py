@@ -24,7 +24,7 @@ def dashboard(request):
         pelatih = parse(query_result(f"""
                                         SELECT nama
                                         FROM member
-                                        JOIN atlet_pelatih ON member.id_pelatih = atlet_pelatih.id_pelatih
+                                        JOIN atlet_pelatih ON member.id = atlet_pelatih.id_pelatih
                                         WHERE atlet_pelatih.id_atlet = '{user_id}';
                                         """
                                     ))
