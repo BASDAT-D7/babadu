@@ -21,6 +21,13 @@ def dashboard(request):
         tinggi_badan = parse(query_result(f"SELECT height FROM atlet WHERE id='{user_id}';"))
         jenis_kelamin = "Laki" if parse(query_result(f"SELECT jenis_kelamin FROM atlet WHERE id='{user_id}';")) else "Perempuan"
         world_rank = "-" if parse(query_result(f"SELECT world_rank FROM atlet WHERE id='{user_id}';")) == None else "#"+parse(query_result(f"SELECT world_rank FROM atlet WHERE id='{user_id}';"))
+        pelatih = parse(query_result(f"""
+                                        SELECT nama
+                                        FROM member
+                                        JOIN atlet_pelatih ON member.id_pelatih = atlet_pelatih.id_pelatih
+                                        WHERE atlet_pelatih.id_atlet = '{user_id}';
+                                        """
+                                    ))
         # SET CONTEXT
         dummy_atlet = {
             "nama_lengkap": nama_lengkap,
@@ -30,7 +37,7 @@ def dashboard(request):
             "play": play,
             "tinggi_badan": f"{tinggi_badan}cm",
             "jenis_kelamin": jenis_kelamin,
-            "pelatih": "Richard Feynman",
+            "pelatih": pelatih,
             "status": "Qualified",
             "world_rank": world_rank,
             "total_poin": "82150",
