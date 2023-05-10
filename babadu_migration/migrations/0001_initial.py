@@ -9,6 +9,6 @@ class Migration(migrations.Migration):
 
     dependencies = []
 
-    # operations = [
-    #     migrations.RunSQL(sql_content),
-    # ]
+    operations = [
+        migrations.RunSQL(sql_content),
+    ]
