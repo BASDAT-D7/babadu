@@ -48,16 +48,18 @@ def dashboard(request):
     
     # IF ROLE PELATIH LOGGED IN
     if request.COOKIES.get('user_role') == "PELATIH":
+        user_id = request.COOKIES.get('user_id')
+        nama_lengkap = parse(query_result(f"SELECT nama FROM member WHERE id='{user_id}';"))
+        email = parse(query_result(f"SELECT email FROM member WHERE id='{user_id}';"))
+        spesialisasi_id = parse(query_result(f"SELECT id_spesialisasi FROM pelatih_spesialisasi WHERE id_pelatih='{user_id}'"))
+        spesialisasi_kategori = parse(query_result(f"SELECT spesialisasi FROM spesialisasi WHERE id='{spesialisasi_id}';"))
+        tanggal_mulai = parse(query_result(f"SELECT tanggal_mulai FROM pelatih WHERE id='{user_id}';"))
         dummy_pelatih = {
-            "nama_lengkap": "Richard Feynman",
+            "nama_lengkap": nama_lengkap,
             "negara": "Indonesia",
-            "email": "richardfeynman@gmail.com",
-            "spesialisasi_kategori": [
-                "Tunggal Putra",
-                "Ganda Putra",
-                "Ganda Campuran",
-            ],
-            "tanggal_mulai": "6 Mei 2023",
+            "email": email,
+            "spesialisasi_kategori": spesialisasi_kategori,
+            "tanggal_mulai": tanggal_mulai
         }
         return render(request, 'dashboard_pelatih.html', dummy_pelatih)
 
