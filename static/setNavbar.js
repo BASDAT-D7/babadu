@@ -13,7 +13,7 @@ function setNavbar(is_authenticated) {
                       <button class="hover:text-blue">Ujian Kualifikasi</button>
                       <div class="dropdown-content">
                         <a href="/tes-kualifikasi">List Ujian Kualifikasi</a>
-                        <a href="/riwayat-ujian-kualifikasi">Riwayat Ujian Kualifikasi</a>
+                        <a href="/tes-kualifikasi/NEW-DI-TK-4">Riwayat Ujian Kualifikasi</a>
                       </div>
                     </div>
                     <div class="dropdown">
@@ -27,7 +27,7 @@ function setNavbar(is_authenticated) {
                       <button class="hover:text-blue">Sponsor</button>
                       <div class="dropdown-content">
                         <a href="/daftar-sponsor">Daftar Sponsor</a>
-                        <a href="/list-sponsor">List Sponsor</a>
+                        <a href="/NEW-DI-TK-4">List Sponsor</a>
                       </div>
                     </div>
                     <a href="/authentication/logout/">
