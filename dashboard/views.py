@@ -28,6 +28,8 @@ def dashboard(request):
                                         WHERE atlet_pelatih.id_atlet = '{user_id}';
                                         """
                                     ))
+        print(query_result(f"SELECT * FROM atlet_non_kualifikasi WHERE id_atlet='{user_id}';"))
+        # status = "Qualified" if len(query_result(f"SELECT * FROM atlet_non_kualifikasi WHERE id_atlet='{user_id}';")) != 0 else "Not Qualified"
         # SET CONTEXT
         dummy_atlet = {
             "nama_lengkap": nama_lengkap,
@@ -38,7 +40,7 @@ def dashboard(request):
             "tinggi_badan": f"{tinggi_badan}cm",
             "jenis_kelamin": jenis_kelamin,
             "pelatih": pelatih,
-            "status": "Qualified",
+            "status": status,
             "world_rank": world_rank,
             "total_poin": "82150",
         }

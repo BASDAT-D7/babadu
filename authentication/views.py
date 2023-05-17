@@ -40,7 +40,13 @@ def register_pelatih(request):
     negara = request.POST.get("negara")
     tanggal_mulai = request.POST.get("tanggal_mulai")
     kategori = request.POST.get("kategori")
-    print(kategori)
+    # INSERT DATA
+    query_add(f"INSERT INTO member (id, nama, email) VALUES ('{user_id}', '{nama}', '{email}');")
+    query_add(f"INSERT INTO pelatih (id, tanggal_mulai) VALUES ('{user_id}', '{tanggal_mulai}');");
+    query_add(f"INSERT INTO pelatih_spesialisasi (id_pelatih, id_spesialisasi) VALUES ('{user_id}', '{kategori}');")
+    # REDIRECT
+    response = HttpResponseRedirect(reverse("dashboard:dashboard"))
+    return response
   return render(request, 'register_form/register_pelatih.html')
 
 def register_umpire(request):
