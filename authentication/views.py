@@ -24,7 +24,7 @@ def register_atlet(request):
     jenis_kelamin = request.POST.get("jenis_kelamin")
     play = request.POST.get("play")
 
-    # EMAIL VALIDATION
+    # TSP : EMAIL VALIDATION
     is_email_exist = True if len(query_result(f"SELECT email FROM member WHERE email='{email}';")) > 1 else False
     print(is_email_exist)
     if (is_email_exist):
@@ -36,7 +36,10 @@ def register_atlet(request):
     # INSERT DATA
     query_add(f"INSERT INTO member (id, nama, email) VALUES ('{user_id}', '{nama}', '{email}');")
     query_add(f"INSERT INTO atlet (id, tgl_lahir, negara_asal, play_right, height, world_rank, jenis_kelamin) VALUES ('{user_id}', '{tanggal_lahir}', '{negara}', {play}, {tinggi_badan}, NULL, {jenis_kelamin});")
-    
+
+    # TSP : ATLET BARU MASUK KE ATLET_NON_KUALIFIKASI
+    query_add(f"INSERT INTO atlet_non_kualifikasi (id_atlet) VALUES ('{user_id}');")    
+
     # REDIRECT
     response = HttpResponseRedirect(reverse("dashboard:dashboard"))
     return response
@@ -56,7 +59,7 @@ def register_pelatih(request):
     tanggal_mulai = request.POST.get("tanggal_mulai")
     kategori = request.POST.get("kategori")
     
-    # EMAIL VALIDATION
+    # TSP : EMAIL VALIDATION
     is_email_exist = True if len(query_result(f"SELECT email FROM member WHERE email='{email}';")) > 1 else False
     print(is_email_exist)
     if (is_email_exist):
@@ -87,7 +90,7 @@ def register_umpire(request):
     email = request.POST.get("email")
     negara = request.POST.get("negara")
     
-    # EMAIL VALIDATION
+    # TSP : EMAIL VALIDATION
     is_email_exist = True if len(query_result(f"SELECT email FROM member WHERE email='{email}';")) > 1 else False
     print(is_email_exist)
     if (is_email_exist):
