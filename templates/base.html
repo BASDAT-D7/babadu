@@ -60,6 +60,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{% static 'getCookie.js' %}"></script>
     <script src="{% static 'setNavbar.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'dropdown.css' %}"></script>
     <script>
         $(document).ready(function () {
             // SET NAVBAR
@@ -67,6 +68,15 @@
             const navbarContent = setNavbar(isAuthenticated);
             const nav = document.querySelector("#navbar");
             $('#navbar').append(navbarContent)
+            // DROPDOWN ON NAVBAR ITEMS
+            document.addEventListener("DOMContentLoaded", function() {
+                const dropdowns = document.querySelectorAll(".dropdown");
+                dropdowns.forEach(function(dropdown) {
+                    dropdown.addEventListener("click", function() {
+                        this.classList.toggle("active");
+                    });
+                });
+            });
         });
     </script>
     {% block meta %}{% endblock %}
