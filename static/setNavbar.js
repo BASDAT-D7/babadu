@@ -42,10 +42,15 @@ function setNavbar(is_authenticated) {
                     <div class="flex gap-5 font-semibold text-bluebright text-xl">
                         Babadu.D7
                     </div>  
-                    <div class="flex gap-5">
+                    <div class="flex gap-5 items-center">
                         <button class="hover:text-blue"><a href="/">Dashboard</a></button>
-                        <button class="hover:text-blue"><a href="/daftar-atlet">Daftar Atlet</a></button>
-                        <button class="hover:text-blue"><a href="/list-atlet">List Atlet</a></button>
+                        <div class="dropdown">
+                          <button class="hover:text-blue">Latih Atlet</button>
+                          <div class="dropdown-content">
+                            <a href="/daftar-atlet">Create Latih Atlet</a>
+                            <a href="/list-atlet">List Atlet Dilatih</a>
+                          </div>
+                        </div>
                         <a href="/authentication/logout/">
                             <button class="border-2 border-redbright text-redbright rounded-xl py-2 px-4 hover:bg-redbright hover:text-black duration-200">Logout</button>
                         </a>
