@@ -3,8 +3,8 @@ from babadu_function.general import *
 
 # Create your views here.
 def daftar_stadium(request):
-    result = query_result(f"SELECT * FROM stadium WHERE")
-    print(result)
+    # result = query_result(f"SELECT * FROM stadium WHERE")
+    # print(result)
     dummy_daftar_stadium = {
         'daftar_stadium': [
             {

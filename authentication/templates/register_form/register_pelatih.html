@@ -23,6 +23,9 @@
                         <div class="py-2">
                             <label class="text-white">Email</label><br>
                             <input id="email" name="email" type="text" placeholder="example@gmail.com" class="rounded-xl w-64 p-1"/>
+                            {% if is_email_exist %}
+                            <br><label class="text-redbright text-sm italic">&nbsp;*email already exists!</label>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="flex gap-10">
@@ -39,15 +42,15 @@
                         <label class="text-white">Kategori</label><br>
                         <span class="text-blue text-xs">*Pilihan dapat lebih dari satu</span>
                         <div class="pt-2 text-white">
-                            <input type="checkbox" id="kategori" name="kategori" value="Tunggal Putra">
+                            <input type="checkbox" id="kategori" name="kategori" value="0942c677-74ae-414b-b513-86a04362b937">
                             <label for="tunggal_putra" class="px-2">Tunggal Putra</label><br>
-                            <input type="checkbox" id="kategori" name="kategori" value="Tunggal Putri">
+                            <input type="checkbox" id="kategori" name="kategori" value="02306471-40c2-4ab0-99ad-76d84f5fb1b8">
                             <label for="tunggal_putri" class="px-2">Tunggal Putri</label><br>
-                            <input type="checkbox" id="kategori" name="kategori" value="Ganda Putra">
+                            <input type="checkbox" id="kategori" name="kategori" value="76e23523-d198-4415-b6ce-a0501c071b1d">
                             <label for="ganda_putra" class="px-2">Ganda Putra</label><br>
-                            <input type="checkbox" id="kategori" name="kategori" value="Ganda Putri">
+                            <input type="checkbox" id="kategori" name="kategori" value="b8d63b0f-6836-4e41-a4df-373f0876819b">
                             <label for="ganda_putri" class="px-2">Ganda Putri</label><br>
-                            <input type="checkbox" id="kategori" name="kategori" value="Ganda Campuran">
+                            <input type="checkbox" id="kategori" name="kategori" value="ed38b0ca-1179-4d66-abc9-5ce830d66e5a">
                             <label for="ganda_campuran" class="px-2">Ganda Campuran</label><br>
                         </div>
                     </div>
