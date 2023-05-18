@@ -7,42 +7,39 @@
 
 {% block content %}
 <div class="bg-gradient-to-bl from-indigo-500/20 pt-28 pb-96 h-full">
-    <div class="flex gap-10 justify-center">
-        <h1 class="flex justify-center shadow-2xl text-4xl text-white mb-10">Hasil Pertandingan</h1>
+    <div class="flex-col gap-10 justify-center">
+        <h1 class="flex justify-center shadow-2xl text-4xl text-white mb-2">Hasil Pertandingan</h1>
+        <h1 class="flex justify-center shadow-2xl text-2xl text-white mb-10">{{partai_kompetisi.jenis_partai}} - {{partai_kompetisi.nama_event}}</h1>
     </div>  
     <div class="flex gap-10 justify-center">
         <div class="grid grid-cols-4 gap-y-6 gap-x-24 bg-gray/20 text-white shadow-inner border-white rounded-3xl py-12 px-16">
             <div>
-                <p class="text-sm opacity-50">Event</p>
-                <p>{{ event.nama_event }}</p>
+                <p class="text-sm opacity-50">Nama Event</p>
+                <p>{{ partai_kompetisi.nama_event }}</p>
             </div>
+            <div>
+                <p class="text-sm opacity-50">Stadium</p>
+                <p>{{ partai_kompetisi.stadium }}</p>
+            </div> 
             <div>
                 <p class="text-sm opacity-50">Hadiah</p>
-                <p>{{ event.total_hadiah }}</p>
+                <p>{{ partai_kompetisi.hadiah }}</p>
             </div>
             <div>
+                <p class="text-sm opacity-50">Kategori Superseries</p>
+                <p>{{ partai_kompetisi.kategori }}</p>
+            </div>  
+            <div>
                 <p class="text-sm opacity-50">Tanggal Mulai</p>
-                <p>{{ event.tanggal_mulai }}</p>
+                <p>{{ partai_kompetisi.tgl_mulai }}</p>
             </div>
             <div>
                 <p class="text-sm opacity-50">Tanggal Selesai</p>
-                <p>{{ event.tanggal_selesai }}</p>
+                <p>{{ partai_kompetisi.tgl_selesai }}</p>
             </div> 
-            <div>
-                <p class="text-sm opacity-50">Kategori</p>
-                <p>{{ event.kategori }}</p>
-            </div>  
             <div>
                 <p class="text-sm opacity-50">Kapasitas</p>
-                <p>{{ event.kapasitas_terisi }}/{{ event.kapasitas_total }}</p>
-            </div> 
-            <div>
-                <p class="text-sm opacity-50">Stadium</p>
-                <p>{{ event.nama_stadium }}</p>
-            </div> 
-            <div>
-                <p class="text-sm opacity-50">Negara</p>
-                <p>{{ event.negara }}</p>
+                <p>{{ partai_kompetisi.kapasitas }}/{{ partai_kompetisi.max_kapasitas }}</p>
             </div> 
         </div>  
     </div>

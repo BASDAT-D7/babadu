@@ -4,5 +4,5 @@ from hasil_pertandingan.views import *
 app_name = 'hasil_pertandingan'
 
 urlpatterns = [
-    path('', hasil_pertandingan, name='hasil_pertandingan'),
+    path('<str:pertandingan>', hasil_pertandingan, name='hasil_pertandingan'),
 ]
