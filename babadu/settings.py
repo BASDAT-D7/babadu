@@ -47,10 +47,11 @@ INSTALLED_APPS = [
     "dashboard",
     "enrolled_event",
     "hasil_pertandingan",
-    "lihat_event",
-    "list_atlet",
+    "list_partai_kompetisi",
+    "latih_atlet",
     "pertandingan",
     "tes_kualifikasi",
+    "list_atlet_dilatih"
 ]
 
 MIDDLEWARE = [

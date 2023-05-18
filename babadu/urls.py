@@ -26,8 +26,9 @@ urlpatterns = [
     path('daftar-sponsor/', include('daftar_sponsor.urls')),
     path('enrolled-event/', include('enrolled_event.urls')),
     path('hasil-pertandingan/', include('hasil_pertandingan.urls')),
-    path('lihat-event/', include('lihat_event.urls')),
-    path('list-atlet/', include('list_atlet.urls')),
+    path('list-partai-kompetisi/', include('list_partai_kompetisi.urls')),
+    path('latih-atlet/', include('latih_atlet.urls')),
     path('pertandingan/', include('pertandingan.urls')),
     path('tes-kualifikasi/', include('tes_kualifikasi.urls')),
+    path('list-atlet/', include('list_atlet_dilatih.urls')),
 ]

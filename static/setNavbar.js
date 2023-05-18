@@ -47,7 +47,7 @@ function setNavbar(is_authenticated) {
                         <div class="dropdown">
                           <button class="hover:text-blue">Latih Atlet</button>
                           <div class="dropdown-content">
-                            <a href="/daftar-atlet">Create Latih Atlet</a>
+                            <a href="/latih-atlet">Create Latih Atlet</a>
                             <a href="/list-atlet">List Atlet Dilatih</a>
                           </div>
                         </div>
@@ -67,7 +67,7 @@ function setNavbar(is_authenticated) {
                     <div class="dropdown">
                       <button class="hover:text-blue">Atlet</button>
                       <div class="dropdown-content">
-                        <a href="/list-atlet">Daftar Atlet</a>
+                        <a href="/daftar-atlet">Daftar Atlet</a>
                       </div>
                     </div>
                     <div class="dropdown">
@@ -81,7 +81,7 @@ function setNavbar(is_authenticated) {
                     <div class="dropdown">
                       <button class="hover:text-blue">Event</button>
                       <div class="dropdown-content">
-                        <a href="/lihat-event">List Partai Kompetisi</a>
+                        <a href="/list-partai-kompetisi/">List Partai Kompetisi</a>
                       </div>
                     </div>
 

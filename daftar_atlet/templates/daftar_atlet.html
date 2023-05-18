@@ -2,27 +2,73 @@
 {% load static %}
 
 {% block meta %}
-<title>Daftar Atlet</title>
+<title>List Atlet</title>
 {% endblock meta %}
 
 {% block content %}
-<div class="bg-gradient-to-bl from-indigo-500/20 pt-52 h-screen">
-    <div class="flex justify-center">
-        <div class="bg-gray/20 text-white shadow-2xl border-white rounded-3xl pt-8 px-24">
-            <h1 class="flex justify-center text-4xl mb-10">Daftar Atlet</h1>
-            <div class="text-black">
-                <div class="py-2">
-                    <label class="text-white">Atlet Yang Mau Didaftarkan</label><br>
-                    <select name="tempat_pelaksanaan" id="tempat_pelaksanaan=" class="rounded-xl w-96 p-1">
-                        {% for atlet in daftar_atlet %}
-                            <option value="{{ atlet.nama_lengkap }}">{{ atlet.nama_lengkap }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            <div class="flex justify-center gap-5 my-10">
-                <button class="border-2 border-green text-green rounded-xl py-2 px-6 hover:bg-green hover:text-black duration-200"><a href="/list-atlet/">Submit</a></button>
-                <button class="border-2 border-graybright text-graybright rounded-xl py-2 px-6 hover:bg-graybright hover:text-black duration-200"><a href="javascript:history.go(-1)">Back</a></button>
-            </div>
+<div class="bg-gradient-to-bl from-indigo-500/20 pt-28 pb-96 h-full">
+    <div class="flex gap-10 justify-center">
+        <h1 class="flex justify-center shadow-2xl text-4xl text-white mb-10">Daftar Atlet</h1>
+    </div>  
+    <div class="flex-wrap gap-10 justify-center ml-20 mr-20">
+        <p class="flex justify-center shadow-2xl text-white mb-5">Atlet Kualifikasi</p>
+        <div class="grid grid-cols-9 gap-y-6 gap-x-24 bg-gray/20 text-white shadow-inner border-white rounded-3xl py-12 px-16">
+            <p class="text-blue font-bold">Nama</p>
+            <p class="text-blue font-bold">Tanggal Lahir</p>
+            <p class="text-blue font-bold">Negara Asal</p>
+            <p class="text-blue font-bold">Play Right</p>
+            <p class="text-blue font-bold">Height</p>
+            <p class="text-blue font-bold">World Rank</p>
+            <p class="text-blue font-bold">World Tour Rank</p>
+            <p class="text-blue font-bold">Jenis Kelamin</p>
+            <p class="text-blue font-bold">Total Point</p>
+            {% for atlet in kualifikasi %}
+                <p>{{ atlet.nama }}</p>
+                <p>{{ atlet.tgl_lahir }}</p>
+                <p>{{ atlet.negara_asal }}</p>
+                <p>{{ atlet.play_right }}</p>
+                <p>{{ atlet.height }}</p>
+                <p>{{ atlet.world_rank }}</p>
+                <p>{{ atlet.world_tour_rank }}</p>
+                <p>{{ atlet.jenis_kelamin }}</p>
+                <p>{{ atlet.total_point }}</p>
+            {% endfor %}
+        </div>
+
+        <p class="flex justify-center shadow-2xl text-white mt-10 mb-5">Atlet Non-Kualifikasi</p>
+        <div class="grid grid-cols-8 gap-y-6 gap-x-24 bg-gray/20 text-white shadow-inner border-white rounded-3xl py-12 px-16">
+            <p class="text-blue font-bold">Nama</p>
+            <p class="text-blue font-bold">Tanggal Lahir</p>
+            <p class="text-blue font-bold">Negara Asal</p>
+            <p class="text-blue font-bold">Play Right</p>
+            <p class="text-blue font-bold">Height</p>
+            <p class="text-blue font-bold">World Rank</p>
+            <p class="text-blue font-bold">Jenis Kelamin</p>
+            <p class="text-blue font-bold">Total Point</p>
+            {% for atlet in non_kualifikasi %}
+                <p>{{ atlet.nama }}</p>
+                <p>{{ atlet.tgl_lahir }}</p>
+                <p>{{ atlet.negara_asal }}</p>
+                <p>{{ atlet.play_right }}</p>
+                <p>{{ atlet.height }}</p>
+                <p>{{ atlet.world_rank }}</p>
+                <p>{{ atlet.jenis_kelamin }}</p>
+                <p>{{ atlet.total_point }}</p>
+            {% endfor %}
+        </div>
+
+        <p class="flex justify-center shadow-2xl text-white mt-10 mb-5">Atlet Ganda</p>
+        <div class="grid grid-cols-4 gap-y-6 gap-x-24 bg-gray/20 text-white shadow-inner border-white rounded-3xl py-12 px-16">
+            <p class="text-blue font-bold">ID Atlet Ganda</p>
+            <p class="text-blue font-bold">Nama Atlet 1</p>
+            <p class="text-blue font-bold">Nama Atlet 2</p>
+            <p class="text-blue font-bold">Total Point</p>
+            {% for atlet in ganda %}
+                <p>{{ atlet.id_atlet_ganda }}</p>
+                <p>{{ atlet.nama_atlet_1 }}</p>
+                <p>{{ atlet.nama_atlet_2 }}</p>
+                <p>{{ atlet.total_point }}</p>
+            {% endfor %}
         </div>
     </div>
 </div>

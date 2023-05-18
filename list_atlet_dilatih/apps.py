@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class LihatEventConfig(AppConfig):
+class ListAtletDilatihConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "lihat_event"
+    name = "list_atlet_dilatih"
