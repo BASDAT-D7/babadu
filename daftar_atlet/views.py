@@ -4,6 +4,7 @@ from babadu_function.authentication import *
 from babadu_function.general import *
 
 # Create your views here.
+@role_required(['UMPIRE'])
 def daftar_atlet(request):
     if get_current_user(request)["user_role"] == "UMPIRE":
         daftar_atlet = {

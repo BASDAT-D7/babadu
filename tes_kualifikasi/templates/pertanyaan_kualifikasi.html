@@ -3,6 +3,8 @@
 
 {% block meta %}
 <title>Pertanyaan Kualifikasi</title>
+<!-- load javascript -->
+<script src="{% static 'kualifikasi.js' %}"></script>
 {% endblock meta %}
 
 {% block content %}
@@ -10,29 +12,32 @@
     <div class="flex gap-10 justify-center">
         <h1 class="flex justify-center shadow-2xl text-4xl text-white mb-10">Pertanyaan Kualifikasi</h1>
     </div>  
-    <div class="flex gap-10 justify-center">
-        <div>
-            {% for soal in pertanyaan_kualifikasi %}
-                <div class="bg-gray/20 text-white shadow-inner border-white rounded-3xl py-12 px-16 mb-8">
-                    <div>
-                        <p class="text-sm opacity-50">Pertanyaan {{ soal.nomor }}</p>
-                        <p>{{ soal.pertanyaan }}</p>
-                        <div class="pt-5">
-                        {% for opsi in soal.jawaban %}
-                            <div>
-                                <input type="radio" id="jawaban" name="jawaban" value="{{ opsi }}">
-                                <label class="text-white px-2">{{ opsi }}</label>
+    <form id="jawab_pertanyaan_kualifikasi" method="POST">
+        {% csrf_token %} 
+        <div class="flex gap-10 justify-center">
+            <div>
+                {% for soal in pertanyaan_kualifikasi %}
+                    <div class="bg-gray/20 text-white shadow-inner border-white rounded-3xl py-12 px-16 mb-8">
+                        <div>
+                            <p class="text-sm opacity-50">Pertanyaan {{ soal.nomor }}</p>
+                            <p>{{ soal.pertanyaan }}</p>
+                            <div class="pt-5">
+                            {% for opsi in soal.jawaban %}
+                                <div>
+                                    <input type="radio" id="jawaban_soal_{{ soal.nomor }}" name="jawaban_soal_{{ soal.nomor }}" value="{{ opsi }}">
+                                    <label class="text-white px-2">{{ opsi }}</label>
+                                </div>
+                            {% endfor %}
                             </div>
-                        {% endfor %}
                         </div>
-                    </div>
-                </div>  
-            {% endfor %}
+                    </div>  
+                {% endfor %}
+            </div>
         </div>
-    </div>
-    <div class="flex justify-center gap-5 my-10">
-        <button class="border-2 border-green text-green rounded-xl py-2 px-6 hover:bg-green hover:text-black duration-200"><a href="/tes-kualifikasi/pertanyaan/">Submit</a></button>
-        <button class="border-2 border-graybright text-graybright rounded-xl py-2 px-6 hover:bg-graybright hover:text-black duration-200"><a href="javascript:history.go(-1)">Back</a></button>
-    </div>
+        <div class="flex justify-center gap-5 my-10">
+            <button onclick="jawabPertanyaanKualifikasi(tahun, batch, tempat, tanggal)" class="border-2 border-green text-green rounded-xl py-2 px-6 hover:bg-green hover:text-black duration-200"><a href="/tes-kualifikasi/riwayat/">Submit</a></button>
+            <button class="border-2 border-graybright text-graybright rounded-xl py-2 px-6 hover:bg-graybright hover:text-black duration-200"><a href="javascript:history.go(-1)">Back</a></button>
+        </div>
+    </form> 
 </div>
 {% endblock content %}

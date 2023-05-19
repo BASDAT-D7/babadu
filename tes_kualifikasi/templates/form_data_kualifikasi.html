@@ -3,39 +3,46 @@
 
 {% block meta %}
 <title>Form Data Kualifikasi</title>
+<!-- load javascript -->
+<script src="{% static 'kualifikasi.js' %}"></script>
 {% endblock meta %}
 
 {% block content %}
-<div class="bg-gradient-to-bl from-indigo-500/20 pt-48 h-screen">
+<div class="bg-gradient-to-bl from-indigo-500/20 pt-32 h-screen">
     <div class="flex justify-center">
         <div class="bg-gray/20 text-white shadow-2xl border-white rounded-3xl pt-8 px-24">
             <h1 class="flex justify-center text-4xl mb-10">Form Data Kualifikasi</h1>
-            <div class="text-black">
-                <div class="py-2">
-                    <label class="text-white">Nomor Batch</label><br>
-                    <input type="text" placeholder="Masukkan nomor batch tes" class="rounded-xl w-96 p-1"/>
+            <form id="buat_data_kualifikasi" method="POST">
+                {% csrf_token %} 
+                <div class="text-black">
+                    <div class="py-2">
+                        <label class="text-white">Tahun</label><br>
+                        <input id="tahun" name="tahun" type="text" placeholder="Masukkan nomor batch tes" class="rounded-xl w-96 p-1"/>
+                    </div>
+                    <div class="py-2">
+                        <label class="text-white">Nomor Batch</label><br>
+                        <input id="nomor_batch" name="nomor_batch" type="text" placeholder="Masukkan nomor batch tes" class="rounded-xl w-96 p-1"/>
+                    </div>
+                    <div class="py-2">
+                        <label class="text-white">Tempat Pelaksanaan</label><br>
+                        <input id="tempat_pelaksanaan" name="tempat_pelaksanaan" type="text" placeholder="Masukkan tempat pelaksanaan" class="rounded-xl w-96 p-1"/>
+                    </div>
+                    <div class="py-2">
+                        <label class="text-white">Tanggal Pelaksanaan</label><br>
+                        <input id="tanggal_pelaksanaan" name="tanggal_pelaksanaan" type="date" class="rounded-xl w-64 p-1">
+                    </div>
+                    {% if not send_data_is_valid %}
+                        <div class="flex justify-center pt-6">
+                            <label class="text-redbright text-sm italic">&nbsp;*please complete the form!</label>
+                        </div>
+                    {% endif %}
+                    <div class="flex justify-center gap-5 my-10">
+                        <button onclick="buatDataKualifikasi()" class="border-2 border-blue text-blue rounded-xl py-2 px-6 hover:bg-blue hover:text-black duration-200">Next</a></button>
+                        <button class="border-2 border-graybright text-graybright rounded-xl py-2 px-6 hover:bg-graybright hover:text-black duration-200"><a href="javascript:history.go(-1)">Back</a></button>
+                    </div>
                 </div>
-                <div class="py-2">
-                    <label class="text-white">Tempat Pelaksanaan</label><br>
-                    <select name="tempat_pelaksanaan" id="tempat_pelaksanaan=" class="rounded-xl w-96 p-1">
-                        {% for tempat in tempat_pelaksanaan %}
-                            <option value="{{ tempat }}">{{ tempat }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="py-2">
-                    <label class="text-white">Tanggal Pelaksanaan</label><br>
-                    <select name="tempat_pelaksanaan" id="tempat_pelaksanaan=" class="rounded-xl w-96 p-1">
-                        {% for tanggal in tanggal_pelaksanaan %}
-                            <option value="{{ tanggal }}">{{ tanggal }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            <div class="flex justify-center gap-5 my-10">
-                <button class="border-2 border-blue text-blue rounded-xl py-2 px-6 hover:bg-blue hover:text-black duration-200"><a href="/tes-kualifikasi/pertanyaan/">Next</a></button>
-                <button class="border-2 border-graybright text-graybright rounded-xl py-2 px-6 hover:bg-graybright hover:text-black duration-200"><a href="javascript:history.go(-1)">Back</a></button>
-            </div>
-        </div>
+            </form>
+        </div> 
     </div>
 </div>
 {% endblock content %}

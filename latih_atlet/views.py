@@ -4,7 +4,7 @@ from babadu_function.authentication import *
 from babadu_function.general import *
 
 # Create your views here.
-
+@role_required(['PELATIH'])
 def latih_atlet(request):
     if get_current_user(request)["user_role"] == "PELATIH":
         result = query_result("SELECT m.id, nama FROM member m JOIN atlet a ON m.id = a.id;")
@@ -21,6 +21,7 @@ def latih_atlet(request):
         return render(request, 'latih_atlet.html', daftar_atlet)
     return HttpResponse('')
 
+@role_required(['PELATIH'])
 def submit_atlet(request):
     if request.method == "POST":
         try:

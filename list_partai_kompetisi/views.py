@@ -4,6 +4,7 @@ from babadu_function.authentication import *
 from babadu_function.general import *
 
 # Create your views here.
+@role_required(['UMPIRE'])
 def list_partai_kompetisi(request):
     if get_current_user(request)["user_role"] == "UMPIRE":
         result = query_result('''

@@ -26,7 +26,6 @@ def register_atlet(request):
 
     # TSP : EMAIL VALIDATION
     is_email_exist = True if len(query_result(f"SELECT email FROM member WHERE email='{email}';")) > 1 else False
-    print(is_email_exist)
     if (is_email_exist):
       context = {
         "is_email_exist": True
@@ -61,7 +60,6 @@ def register_pelatih(request):
     
     # TSP : EMAIL VALIDATION
     is_email_exist = True if len(query_result(f"SELECT email FROM member WHERE email='{email}';")) > 1 else False
-    print(is_email_exist)
     if (is_email_exist):
       context = {
         "is_email_exist": True
@@ -92,7 +90,6 @@ def register_umpire(request):
     
     # TSP : EMAIL VALIDATION
     is_email_exist = True if len(query_result(f"SELECT email FROM member WHERE email='{email}';")) > 1 else False
-    print(is_email_exist)
     if (is_email_exist):
       context = {
         "is_email_exist": True
