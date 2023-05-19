@@ -11,7 +11,7 @@ def convert_date_format(date_string):
     return formatted_date
 
 # Create your views here.
-@role_required(['ATLET', 'UMPIRE'])
+@role_required(['UMPIRE'])
 def form_data_kualifikasi(request):
     if (request.method == 'POST'):
         tahun = request.POST.get('tahun')
@@ -37,11 +37,12 @@ def list_ujian_kualifikasi(request):
             "tanggal": str(i[3])
         })
     context = {
-        "list_ujian": list_ujian
+        "list_ujian": list_ujian,
+        "role": get_current_user(request)["user_role"]
     }
     return render(request, 'list_ujian_kualifikasi.html', context)
 
-@role_required(['ATLET', 'UMPIRE'])
+@role_required(['ATLET'])
 def pertanyaan_kualifikasi(request, tahun, batch, tempat, tanggal):
     # SEARCH & SELECT DATA
     result = query_result(f"SELECT * FROM ujian_kualifikasi WHERE tahun = '{tahun}' AND batch = '{batch}' AND tempat = '{tempat}' AND tanggal = '{tanggal}';")
