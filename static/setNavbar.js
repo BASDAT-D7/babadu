@@ -121,7 +121,7 @@ function setNavbar(is_authenticated) {
                   </div>
 
                   <a href="/authentication/logout/">
-                      <button class="border-2 border-redbright text-redbright rounded-xl py-2 px-4 hover:bg-redbright hover:text-black duration-200">Logout</button>
+                      <button class="border-2 border-green text-green rounded-xl py-2 px-4 hover:bg-green hover:text-black duration-200">Login</button>
                   </a>
               </div>
           </div>`;
