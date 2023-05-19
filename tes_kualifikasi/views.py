@@ -1,3 +1,5 @@
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.shortcuts import render
 from babadu_function.general import *
 from babadu_function.authentication import *
@@ -19,10 +21,24 @@ def form_data_kualifikasi(request):
         tempat_pelaksanaan = request.POST.get('tempat_pelaksanaan')
         tanggal_pelaksanaan = request.POST.get('tanggal_pelaksanaan')
 
+        # HANDLE NONE FORM VALUE
+        if (tahun == ''):
+            context = {
+                "send_data_is_valid": False
+            }
+            return render(request, 'form_data_kualifikasi.html', context)
+
         # INSERT DATA
         query_add(f"INSERT INTO ujian_kualifikasi (tahun, batch, tempat, tanggal) VALUES ('{tahun}', '{nomor_batch}', '{tempat_pelaksanaan}', '{tanggal_pelaksanaan}');")
+
+        # REDIRECT
+        response = HttpResponseRedirect(reverse("tes_kualifikasi:form_data_kualifikasi"))
+        return response
         
-    return render(request, 'form_data_kualifikasi.html')
+    context = {
+        "send_data_is_valid": True
+    }
+    return render(request, 'form_data_kualifikasi.html', context)
 
 @role_required(['ATLET', 'UMPIRE'])
 def list_ujian_kualifikasi(request):
