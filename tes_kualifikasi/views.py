@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from babadu_function.general import *
+from babadu_function.authentication import *
 from datetime import datetime
 
 def convert_date_format(date_string):
@@ -10,6 +11,7 @@ def convert_date_format(date_string):
     return formatted_date
 
 # Create your views here.
+@role_required(['ATLET', 'UMPIRE'])
 def form_data_kualifikasi(request):
     if (request.method == 'POST'):
         tahun = request.POST.get('tahun')
@@ -22,6 +24,7 @@ def form_data_kualifikasi(request):
         
     return render(request, 'form_data_kualifikasi.html')
 
+@role_required(['ATLET', 'UMPIRE'])
 def list_ujian_kualifikasi(request):
     # GET DATA
     result = query_result("SELECT * FROM ujian_kualifikasi;")
@@ -38,6 +41,7 @@ def list_ujian_kualifikasi(request):
     }
     return render(request, 'list_ujian_kualifikasi.html', context)
 
+@role_required(['ATLET', 'UMPIRE'])
 def pertanyaan_kualifikasi(request, tahun, batch, tempat, tanggal):
     # SEARCH & SELECT DATA
     # TODO: HANDLE THIS
@@ -134,6 +138,7 @@ def pertanyaan_kualifikasi(request, tahun, batch, tempat, tanggal):
 
     return render(request, 'pertanyaan_kualifikasi.html', context)
 
+@role_required(['ATLET', 'UMPIRE'])
 def riwayat_ujian_kualifikasi(request):
     # GET DATA
     result = query_result("SELECT * FROM atlet_nonkualifikasi_ujian_kualifikasi;")
