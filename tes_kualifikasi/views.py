@@ -30,7 +30,14 @@ def list_ujian_kualifikasi(request):
     }
     return render(request, 'list_ujian_kualifikasi.html', context)
 
-def pertanyaan_kualifikasi(request):
+def pertanyaan_kualifikasi(request, tahun, batch, tempat, tanggal):
+    # SEARCH & SELECT DATA
+    # TODO: HANDLE THIS
+    result = query_result(f"SELECT * FROM ujian_kualifikasi WHERE tahun = '{tahun}' AND batch = '{batch}' AND tempat = '{tempat}' AND tanggal = '{tanggal}';")
+    if (len(result) == 0):
+        print("Data tidak ditemukan")
+        return render(request, 'pertanyaan_kualifikasi.html')
+
     # Pertanyaan Kualifikasi
     daftar_pertanyaan = {
         "pertanyaan_kualifikasi": [
@@ -101,5 +108,10 @@ def pertanyaan_kualifikasi(request):
 
         # INSERT DATA
         print(jawaban_benar)
+        print(tahun, batch, tempat, tanggal)
+        print(result)
+
+        
+
 
     return render(request, 'pertanyaan_kualifikasi.html', daftar_pertanyaan)
