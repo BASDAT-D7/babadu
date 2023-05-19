@@ -45,12 +45,12 @@ def list_ujian_kualifikasi(request):
     # GET DATA
     result = query_result("SELECT * FROM ujian_kualifikasi;")
     list_ujian = []  
-    for i in result:
+    for row in result:
         list_ujian.append({
-            "tahun": i[0],
-            "batch": i[1],
-            "tempat": i[2],
-            "tanggal": str(i[3])
+            "tahun": row[0],
+            "batch": row[1],
+            "tempat": row[2],
+            "tanggal": str(row[3])
         })
     context = {
         "list_ujian": list_ujian,
@@ -159,16 +159,35 @@ def riwayat_ujian_kualifikasi(request):
     # GET DATA
     result = query_result("SELECT * FROM atlet_nonkualifikasi_ujian_kualifikasi;")
     riwayat_ujian = []  
-    for i in result:
-        riwayat_ujian.append({
-            "nama_atlet": parse(query_result(f"SELECT nama FROM member WHERE id = '{i[0]}';")),
-            "tahun": i[1],
-            "batch": i[2],
-            "tempat": i[3],
-            "tanggal": str(i[4]),
-            "hasil": "Lulus" if i[5] else "Tidak Lulus"
-        })
+
+    # USER ROLE UMPIRE CAN SEE ALL DATA
+    if (get_current_user(request)["user_role"] == "UMPIRE"):
+        for row in result:
+            riwayat_ujian.append({
+                "nama_atlet": parse(query_result(f"SELECT nama FROM member WHERE id = '{row[0]}';")),
+                "tahun": row[1],
+                "batch": row[2],
+                "tempat": row[3],
+                "tanggal": str(row[4]),
+                "hasil": "Lulus" if row[5] else "Tidak Lulus"
+            })
+            
+    # USER ROLE ATLET CAN ONLY SEE THEIR OWN DATA
+    else:
+        user_id = request.COOKIES.get('user_id')
+        for row in result:
+            if (str(row[0]) == user_id):
+                riwayat_ujian.append({
+                    "nama_atlet": parse(query_result(f"SELECT nama FROM member WHERE id = '{row[0]}';")),
+                    "tahun": row[1],
+                    "batch": row[2],
+                    "tempat": row[3],
+                    "tanggal": str(row[4]),
+                    "hasil": "Lulus" if row[5] else "Tidak Lulus"
+                })
+
     context = {
-        "riwayat_ujian": riwayat_ujian
+        "riwayat_ujian": riwayat_ujian,
+        "role": get_current_user(request)["user_role"]
     }
     return render(request, 'riwayat_ujian_kualifikasi.html', context)
