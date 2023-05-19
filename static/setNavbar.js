@@ -98,28 +98,6 @@ function setNavbar(is_authenticated) {
                   Babadu.D7
               </div>  
               <div class="flex gap-5 items-center">
-                  <button class="hover:text-blue"><a href="/">Dashboard</a></button>
-                  <div class="dropdown">
-                    <button class="hover:text-blue">Atlet</button>
-                    <div class="dropdown-content">
-                      <a href="/list-atlet">Daftar Atlet</a>
-                    </div>
-                  </div>
-                  <div class="dropdown">
-                    <button class="hover:text-blue">Ujian Kualifikasi</button>
-                    <div class="dropdown-content">
-                      <a href="/tes-kualifikasi">Buat Ujian Kualifikasi</a>
-                      <a href="/tes-kualifikasi/list-ujian">List Ujian Kualifikasi</a>
-                      <a href="/tes-kualifikasi/riwayat">Riwayat Ujian Kualifikasi</a>
-                    </div>
-                  </div>
-                  <div class="dropdown">
-                    <button class="hover:text-blue">Event</button>
-                    <div class="dropdown-content">
-                      <a href="/lihat-event">List Partai Kompetisi</a>
-                    </div>
-                  </div>
-
                   <a href="/authentication/logout/">
                       <button class="border-2 border-green text-green rounded-xl py-2 px-4 hover:bg-green hover:text-black duration-200">Login</button>
                   </a>
