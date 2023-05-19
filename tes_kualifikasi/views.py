@@ -15,7 +15,20 @@ def form_data_kualifikasi(request):
     return render(request, 'form_data_kualifikasi.html')
 
 def list_ujian_kualifikasi(request):
-    return render(request, 'pertanyaan_kualifikasi.html')
+    result = query_result("SELECT * FROM ujian_kualifikasi;")
+    list_ujian = []  
+    for i in result:
+        list_ujian.append({
+            "tahun": i[0],
+            "batch": i[1],
+            "tempat": i[2],
+            "tanggal": i[3]
+        })
+    context = {
+        "list_ujian": list_ujian
+    }
+    print(context)
+    return render(request, 'list_ujian_kualifikasi.html', context)
 
 def pertanyaan_kualifikasi(request):
     dummy_pertanyaan = {
