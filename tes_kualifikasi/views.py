@@ -15,6 +15,7 @@ def form_data_kualifikasi(request):
     return render(request, 'form_data_kualifikasi.html')
 
 def list_ujian_kualifikasi(request):
+    # GET DATA
     result = query_result("SELECT * FROM ujian_kualifikasi;")
     list_ujian = []  
     for i in result:
@@ -27,51 +28,78 @@ def list_ujian_kualifikasi(request):
     context = {
         "list_ujian": list_ujian
     }
-    print(context)
     return render(request, 'list_ujian_kualifikasi.html', context)
 
 def pertanyaan_kualifikasi(request):
-    dummy_pertanyaan = {
+    # Pertanyaan Kualifikasi
+    daftar_pertanyaan = {
         "pertanyaan_kualifikasi": [
             {
                 "nomor": 1,
-                "pertanyaan": "Apakah anda pernah mengikuti kejuaraan bulutangkis sebelumnya?",
+                "pertanyaan": "Apakah bulutangkis adalah olahraga raket yang dimainkan dengan menggunakan kok?",
                 "jawaban": [
                     "Ya",
                     "Tidak"
-                ]
+                ],
+                "kunci_jawaban": "Ya"
             },
             {
                 "nomor": 2,
-                "pertanyaan": "Bagaimana hasil kejuaraan bulutangkis sebelumnya?",
+                "pertanyaan": "Apakah pemain bulutangkis diizinkan menyentuh jaring saat bermain?",
                 "jawaban": [
-                    "Juara",
-                    "Runner Up",
-                    "Semi Final",
-                    "Perempat Final",
-                    "Tidak Sama Sekali"
-                ]
+                   "Ya",
+                   "Tidak"
+                ],
+                "kunci_jawaban": "Tidak"
             },
             {
                 "nomor": 3,
-                "pertanyaan": "Mengapa anda ingin mengikuti kejuaraan bulutangkis ini?",
+                "pertanyaan": "Apakah setiap pemain bulutangkis diperbolehkan memegang raket dengan kedua tangan?",
                 "jawaban": [
-                    "Untuk mengasah kemampuan",
-                    "Untuk mengisi waktu luang",
-                    "Untuk mengikuti jejak orang tua",
-                    "Alasan lainnya"
-                ]
+                    "Ya",
+                    "Tidak"
+                ],
+                "kunci_jawaban": "Ya"
+
             },
             {
                 "nomor": 4,
-                "pertanyaan": "Berapa lama anda bermain bulutangkis?",
+                "pertanyaan": "Apakah permainan bulutangkis dimainkan oleh dua orang atau lebih?",
                 "jawaban": [
-                    "Kurang dari 1 tahun",
-                    "1 - 2 tahun",
-                    "2 - 3 tahun",
-                    "Lebih dari 3 tahun"
-                ]
+                    "Ya",
+                    "Tidak"
+                ],
+                "kunci_jawaban": "Ya"
+            },
+            {
+                "nomor": 5,
+                "pertanyaan": "Apakah poin tertinggi dalam permainan bulutangkis adalah 21 poin?",
+                "jawaban": [
+                    "Ya",
+                    "Tidak"
+                ],
+                "kunci_jawaban": "Ya"
             }
         ]
     }
-    return render(request, 'pertanyaan_kualifikasi.html', dummy_pertanyaan)
+
+    # Jawaban Soal
+    if (request.method == 'POST'):
+        jawaban_soal_1 = request.POST.get('jawaban_soal_1')
+        jawaban_soal_2 = request.POST.get('jawaban_soal_2')
+        jawaban_soal_3 = request.POST.get('jawaban_soal_3')
+        jawaban_soal_4 = request.POST.get('jawaban_soal_4')
+        jawaban_soal_5 = request.POST.get('jawaban_soal_5')
+        
+        # Koreksi
+        jawaban_benar = 0
+        jawaban_benar += 1 if (jawaban_soal_1 == daftar_pertanyaan['pertanyaan_kualifikasi'][0]['kunci_jawaban']) else 0
+        jawaban_benar += 1 if (jawaban_soal_2 == daftar_pertanyaan['pertanyaan_kualifikasi'][1]['kunci_jawaban']) else 0
+        jawaban_benar += 1 if (jawaban_soal_3 == daftar_pertanyaan['pertanyaan_kualifikasi'][2]['kunci_jawaban']) else 0
+        jawaban_benar += 1 if (jawaban_soal_4 == daftar_pertanyaan['pertanyaan_kualifikasi'][3]['kunci_jawaban']) else 0
+        jawaban_benar += 1 if (jawaban_soal_5 == daftar_pertanyaan['pertanyaan_kualifikasi'][4]['kunci_jawaban']) else 0
+
+        # INSERT DATA
+        print(jawaban_benar)
+
+    return render(request, 'pertanyaan_kualifikasi.html', daftar_pertanyaan)
