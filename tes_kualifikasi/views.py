@@ -47,7 +47,7 @@ def pertanyaan_kualifikasi(request, tahun, batch, tempat, tanggal):
         return render(request, 'pertanyaan_kualifikasi.html')
 
     # Pertanyaan Kualifikasi
-    daftar_pertanyaan = {
+    context = {
         "pertanyaan_kualifikasi": [
             {
                 "nomor": 1,
@@ -95,7 +95,11 @@ def pertanyaan_kualifikasi(request, tahun, batch, tempat, tanggal):
                 ],
                 "kunci_jawaban": "Ya"
             }
-        ]
+        ],
+        "tahun": tahun,
+        "batch": batch,
+        "tempat": tempat,
+        "tanggal": str(tanggal)
     }
 
     # Jawaban Soal
@@ -108,11 +112,11 @@ def pertanyaan_kualifikasi(request, tahun, batch, tempat, tanggal):
         
         # Koreksi
         jawaban_benar = 0
-        jawaban_benar += 1 if (jawaban_soal_1 == daftar_pertanyaan['pertanyaan_kualifikasi'][0]['kunci_jawaban']) else 0
-        jawaban_benar += 1 if (jawaban_soal_2 == daftar_pertanyaan['pertanyaan_kualifikasi'][1]['kunci_jawaban']) else 0
-        jawaban_benar += 1 if (jawaban_soal_3 == daftar_pertanyaan['pertanyaan_kualifikasi'][2]['kunci_jawaban']) else 0
-        jawaban_benar += 1 if (jawaban_soal_4 == daftar_pertanyaan['pertanyaan_kualifikasi'][3]['kunci_jawaban']) else 0
-        jawaban_benar += 1 if (jawaban_soal_5 == daftar_pertanyaan['pertanyaan_kualifikasi'][4]['kunci_jawaban']) else 0
+        jawaban_benar += 1 if (jawaban_soal_1 == context['pertanyaan_kualifikasi'][0]['kunci_jawaban']) else 0
+        jawaban_benar += 1 if (jawaban_soal_2 == context['pertanyaan_kualifikasi'][1]['kunci_jawaban']) else 0
+        jawaban_benar += 1 if (jawaban_soal_3 == context['pertanyaan_kualifikasi'][2]['kunci_jawaban']) else 0
+        jawaban_benar += 1 if (jawaban_soal_4 == context['pertanyaan_kualifikasi'][3]['kunci_jawaban']) else 0
+        jawaban_benar += 1 if (jawaban_soal_5 == context['pertanyaan_kualifikasi'][4]['kunci_jawaban']) else 0
 
         # INSERT DATA
         user_id = request.COOKIES.get('user_id')
@@ -124,7 +128,8 @@ def pertanyaan_kualifikasi(request, tahun, batch, tempat, tanggal):
                         '{batch}',
                         '{tempat}',
                         '{tanggal}',
-                        {hasil_lulus});
+                        '{hasil_lulus}');
                     """)
+        print(hasil_lulus)
 
-    return render(request, 'pertanyaan_kualifikasi.html', daftar_pertanyaan)
+    return render(request, 'pertanyaan_kualifikasi.html', context)

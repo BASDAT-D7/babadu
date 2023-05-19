@@ -10,12 +10,12 @@ function buatDataKualifikasi() {
   });
 }
 
-function jawabPertanyaanKualifikasi() {
+function jawabPertanyaanKualifikasi(tahun, batch, tempat, tanggal) {
   const jawab_pertanyaan_kualifikasi = $("#jawab_pertanyaan_kualifikasi");
 
   $.ajax({
     type: "POST",
-    url: "/tes-kualifikasi/pertanyaan/",
+    url: `/tes-kualifikasi/pertanyaan/${tahun}/${batch}/${tempat}/${tanggal}/`,
     data: jawab_pertanyaan_kualifikasi.serialize(),
   }).done(function (data) {
     jawab_pertanyaan_kualifikasi.trigger("reset");
