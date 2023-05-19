@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Riwayat Ujian Kualifikasi</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="bg-gradient-to-bl from-indigo-500/20 pt-36 pb-96 h-full">
+    <div class="flex gap-10 justify-center">
+        <h1 class="flex justify-center shadow-2xl text-4xl text-white mb-10">Riwayat Ujian Kualifikasi</h1>
+    </div>  
+    <div class="flex gap-10 justify-center">
+        <div class="grid grid-cols-6 gap-y-6 gap-x-2 bg-gray/20 text-white shadow-inner border-white rounded-3xl py-12 px-16 items-center mx-10">
+            <p class="text-blue font-bold">Nama Atlet</p>
+            <p class="text-blue font-bold">Tahun</p>
+            <p class="text-blue font-bold">Batch</p>
+            <p class="text-blue font-bold">Tempat Pelaksanaan</p>
+            <p class="text-blue font-bold">Tanggal Pelaksanaan</p>
+            <p class="text-blue font-bold">Hasil</p>
+            {% for ujian in riwayat_ujian %}
+                <p>{{ ujian.nama_atlet }}</p>
+                <p>{{ ujian.tahun }}</p>
+                <p>{{ ujian.batch }}</p>
+                <p>{{ ujian.tempat }}</p>
+                <p>{{ ujian.tanggal }}</p>
+                <p>{{ ujian.hasil }}</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -133,3 +133,21 @@ def pertanyaan_kualifikasi(request, tahun, batch, tempat, tanggal):
         print(hasil_lulus)
 
     return render(request, 'pertanyaan_kualifikasi.html', context)
+
+def riwayat_ujian_kualifikasi(request):
+    # GET DATA
+    result = query_result("SELECT * FROM atlet_nonkualifikasi_ujian_kualifikasi;")
+    riwayat_ujian = []  
+    for i in result:
+        riwayat_ujian.append({
+            "nama_atlet": parse(query_result(f"SELECT nama FROM member WHERE id = '{i[0]}';")),
+            "tahun": i[1],
+            "batch": i[2],
+            "tempat": i[3],
+            "tanggal": str(i[4]),
+            "hasil": "Lulus" if i[5] else "Tidak Lulus"
+        })
+    context = {
+        "riwayat_ujian": riwayat_ujian
+    }
+    return render(request, 'riwayat_ujian_kualifikasi.html', context)

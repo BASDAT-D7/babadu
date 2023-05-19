@@ -13,7 +13,7 @@ function setNavbar(is_authenticated) {
                       <button class="hover:text-blue">Ujian Kualifikasi</button>
                       <div class="dropdown-content">
                         <a href="/tes-kualifikasi/list-ujian">List Ujian Kualifikasi</a>
-                        <a href="/tes-kualifikasi/NEW-DI-TK-4">Riwayat Ujian Kualifikasi</a>
+                        <a href="/tes-kualifikasi/riwayat">Riwayat Ujian Kualifikasi</a>
                       </div>
                     </div>
                     <div class="dropdown">
@@ -75,7 +75,7 @@ function setNavbar(is_authenticated) {
                       <div class="dropdown-content">
                         <a href="/tes-kualifikasi">Buat Ujian Kualifikasi</a>
                         <a href="/tes-kualifikasi/list-ujian">List Ujian Kualifikasi</a>
-                        <a href="/tes-kualifikasi/NEW-DI-TK-4">Riwayat Ujian Kualifikasi</a>
+                        <a href="/tes-kualifikasi/riwayat">Riwayat Ujian Kualifikasi</a>
                       </div>
                     </div>
                     <div class="dropdown">
@@ -110,7 +110,7 @@ function setNavbar(is_authenticated) {
                     <div class="dropdown-content">
                       <a href="/tes-kualifikasi">Buat Ujian Kualifikasi</a>
                       <a href="/tes-kualifikasi/list-ujian">List Ujian Kualifikasi</a>
-                      <a href="/tes-kualifikasi/NEW-DI-TK-4">Riwayat Ujian Kualifikasi</a>
+                      <a href="/tes-kualifikasi/riwayat">Riwayat Ujian Kualifikasi</a>
                     </div>
                   </div>
                   <div class="dropdown">
