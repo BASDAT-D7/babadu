@@ -22,8 +22,11 @@ BEGIN
       AND Hasil_Lulus = FALSE;
 
     -- Mengupdate total point atlet
-    UPDATE ATLET_KUALIFIKASI
+    UPDATE POINT_HISTORY
     SET Total_Point = Total_Point + 50
-    WHERE ID_Atlet = atlet_id;
+    WHERE ID_Atlet = atlet_id
+      AND Minggu_Ke = EXTRACT(WEEK FROM CURRENT_DATE) -- Menyesuaikan dengan minggu yang tepat
+      AND Bulan = TO_CHAR(CURRENT_DATE, 'Month')
+      AND Tahun = EXTRACT(YEAR FROM CURRENT_DATE);
 END;
 $$;

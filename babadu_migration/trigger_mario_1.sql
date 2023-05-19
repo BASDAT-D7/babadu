@@ -49,9 +49,12 @@ BEGIN
               AND Hasil_Lulus = FALSE;
 
             -- Mengupdate total point atlet
-            UPDATE ATLET_KUALIFIKASI
+            UPDATE POINT_HISTORY
             SET Total_Point = Total_Point + 50
-            WHERE ID_Atlet = NEW.ID_Atlet;
+            WHERE ID_Atlet = NEW.ID_Atlet
+              AND Minggu_Ke = EXTRACT(WEEK FROM NEW.Tanggal) -- Menyesuaikan dengan minggu yang tepat
+              AND Bulan = TO_CHAR(NEW.Tanggal, 'Month')
+              AND Tahun = EXTRACT(YEAR FROM NEW.Tanggal);
         ELSE
             -- Hanya menyimpan data ujian kualifikasi yang diambil
             RETURN NEW;
