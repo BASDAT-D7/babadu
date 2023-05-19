@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from babadu_function.general import *
+from babadu_function.authentication import *
 
 # Create your views here.
+@role_required(['ATLET'])
 def daftar_stadium(request):
     # result = query_result(f"SELECT * FROM stadium WHERE")
     # print(result)
@@ -35,6 +37,7 @@ def daftar_stadium(request):
     }
     return render(request, 'daftar_stadium.html', dummy_daftar_stadium)
 
+@role_required(['ATLET'])
 def daftar_event_by_stadium(request, stadium_id):
     dummy_daftar_event = {
         'stadium_id': stadium_id,
@@ -88,6 +91,7 @@ def daftar_event_by_stadium(request, stadium_id):
     }
     return render(request, 'daftar_event_by_stadium.html', dummy_daftar_event)
 
+@role_required(['ATLET'])
 def daftar_kategori(request, stadium_id, event_id):
     daftar_stadium= [
         {

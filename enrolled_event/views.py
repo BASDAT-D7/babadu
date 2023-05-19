@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from babadu_function.authentication import *
 
 # Create your views here.
+@role_required(['ATLET'])
 def enrolled_event(request):
     dummy_enrolled_event = {
         'enrolled_events': [

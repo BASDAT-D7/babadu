@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from babadu_function.authentication import *
 
 # Create your views here.
+@role_required(['UMPIRE'])
 def perempat_final(request):
     dummy_perempat_final = {
         'daftar_perempat_final': [
@@ -36,6 +38,7 @@ def perempat_final(request):
     }           
     return render(request, 'pertandingan_perempat_final.html', dummy_perempat_final)
 
+@role_required(['UMPIRE'])
 def semifinal(request):
     dummy_semifinal = {
         'daftar_perempat_final': [
@@ -57,6 +60,7 @@ def semifinal(request):
     }
     return render(request, 'pertandingan_semifinal.html', dummy_semifinal)
 
+@role_required(['UMPIRE'])
 def final(request):
     dummy_final = {
         'perebutan_juara_tiga': [

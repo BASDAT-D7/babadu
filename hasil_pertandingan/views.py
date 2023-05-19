@@ -5,6 +5,7 @@ from babadu_function.general import *
 import locale
 
 # Create your views here.
+@role_required(['UMPIRE'])
 def hasil_pertandingan(request, pertandingan):
     if get_current_user(request)["user_role"] == "UMPIRE":
         locale.setlocale(locale.LC_ALL, 'id-ID')
