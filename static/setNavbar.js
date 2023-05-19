@@ -98,7 +98,7 @@ function setNavbar(is_authenticated) {
                   Babadu.D7
               </div>  
               <div class="flex gap-5 items-center">
-                  <a href="/authentication/logout/">
+                  <a href="/authentication/">
                       <button class="border-2 border-green text-green rounded-xl py-2 px-4 hover:bg-green hover:text-black duration-200">Login</button>
                   </a>
               </div>

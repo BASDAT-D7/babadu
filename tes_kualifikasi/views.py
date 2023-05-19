@@ -44,7 +44,6 @@ def list_ujian_kualifikasi(request):
 @role_required(['ATLET', 'UMPIRE'])
 def pertanyaan_kualifikasi(request, tahun, batch, tempat, tanggal):
     # SEARCH & SELECT DATA
-    # TODO: HANDLE THIS
     result = query_result(f"SELECT * FROM ujian_kualifikasi WHERE tahun = '{tahun}' AND batch = '{batch}' AND tempat = '{tempat}' AND tanggal = '{tanggal}';")
     if (len(result) == 0):
         print("Data tidak ditemukan")
