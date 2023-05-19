@@ -1,23 +1,21 @@
 from django.shortcuts import render
+from babadu_function.general import *
 
 # Create your views here.
 def form_data_kualifikasi(request):
-    dummy_form_settings = {
-        "tempat_pelaksanaan": [
-            "Gor Bulutangkis Jakarta",
-            "Gor Bulutangkis Surabaya",
-            "Gor Bulutangkis Bandung"
-        ],
-        "tanggal_pelaksanaan": [
-            "06/05/2023",
-            "07/05/2023",
-            "08/05/2023",
-            "09/05/2023",
-            "10/05/2023"
-        ]
+    if (request.method == 'POST'):
+        tahun = request.POST.get('tahun')
+        nomor_batch = request.POST.get('nomor_batch')
+        tempat_pelaksanaan = request.POST.get('tempat_pelaksanaan')
+        tanggal_pelaksanaan = request.POST.get('tanggal_pelaksanaan')
 
-    }
-    return render(request, 'form_data_kualifikasi.html', dummy_form_settings)
+        # INSERT DATA
+        query_add(f"INSERT INTO ujian_kualifikasi (tahun, batch, tempat, tanggal) VALUES ('{tahun}', '{nomor_batch}', '{tempat_pelaksanaan}', '{tanggal_pelaksanaan}');")
+        
+    return render(request, 'form_data_kualifikasi.html')
+
+def list_ujian_kualifikasi(request):
+    return render(request, 'pertanyaan_kualifikasi.html')
 
 def pertanyaan_kualifikasi(request):
     dummy_pertanyaan = {
