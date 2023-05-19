@@ -22,7 +22,7 @@
                 <p>{{ ujian.batch }}</p>
                 <p>{{ ujian.tempat }}</p>
                 <p>{{ ujian.tanggal }}</p>
-                <button class="border-2 border-green text-green rounded-xl py-2 px-6 hover:bg-green hover:text-black duration-200"><a href="/tes-kualifikasi/pertanyaan/">Ikuti</a></button>
+                <button class="border-2 border-green text-green rounded-xl py-2 px-6 hover:bg-green hover:text-black duration-200"><a href="/tes-kualifikasi/pertanyaan/{{ujian.tahun}}/{{ujian.batch}}/{{ujian.tempat}}/{{ujian.tanggal}}/">Ikuti</a></button>
             {% endfor %}
         </div>
     </div>

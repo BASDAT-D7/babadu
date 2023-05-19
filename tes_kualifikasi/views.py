@@ -1,5 +1,13 @@
 from django.shortcuts import render
 from babadu_function.general import *
+from datetime import datetime
+
+def convert_date_format(date_string):
+    # Membuat objek datetime dari string input dengan format yang diberikan
+    date_object = datetime.strptime(date_string, "%b. %d, %Y")
+    # Mengonversi objek datetime menjadi string dengan format yang diinginkan
+    formatted_date = date_object.strftime("%Y-%m-%d")
+    return formatted_date
 
 # Create your views here.
 def form_data_kualifikasi(request):
@@ -23,7 +31,7 @@ def list_ujian_kualifikasi(request):
             "tahun": i[0],
             "batch": i[1],
             "tempat": i[2],
-            "tanggal": i[3]
+            "tanggal": str(i[3])
         })
     context = {
         "list_ujian": list_ujian
@@ -107,11 +115,16 @@ def pertanyaan_kualifikasi(request, tahun, batch, tempat, tanggal):
         jawaban_benar += 1 if (jawaban_soal_5 == daftar_pertanyaan['pertanyaan_kualifikasi'][4]['kunci_jawaban']) else 0
 
         # INSERT DATA
-        print(jawaban_benar)
-        print(tahun, batch, tempat, tanggal)
-        print(result)
-
-        
-
+        user_id = request.COOKIES.get('user_id')
+        hasil_lulus = True if (jawaban_benar >= 4) else False
+        query_add(f"""
+                    INSERT INTO atlet_nonkualifikasi_ujian_kualifikasi (id_atlet, tahun, batch, tempat, tanggal, hasil_lulus)
+                    VALUES ('{user_id}',
+                        '{tahun}',
+                        '{batch}',
+                        '{tempat}',
+                        '{tanggal}',
+                        {hasil_lulus});
+                    """)
 
     return render(request, 'pertanyaan_kualifikasi.html', daftar_pertanyaan)
