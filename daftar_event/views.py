@@ -1,179 +1,105 @@
 from django.shortcuts import render
 from babadu_function.general import *
 from babadu_function.authentication import *
+from datetime import date
+import locale
 
 # Create your views here.
 @role_required(['ATLET'])
 def daftar_stadium(request):
     # result = query_result(f"SELECT * FROM stadium WHERE")
     # print(result)
-    dummy_daftar_stadium = {
-        'daftar_stadium': [
-            {
-                'id': 1,
-                'nama_stadium': 'Gelora Bung Karno',
-                'negara': 'Indonesia',
-                'kapasitas': '8'
-            },
-            {
-                'id': 2,
-                'nama_stadium': 'Senayan',
-                'negara': 'Indonesia',
-                'kapasitas': '16'
-            }, 
-            {
-                'id': 3,
-                'nama_stadium': 'Old Trafford',
-                'negara': 'Inggris',
-                'kapasitas': '74'
-            },
-            {
-                'id': 4,
-                'nama_stadium': 'Maracanã',
-                'negara': 'Brasil',
-                'kapasitas': '78'
-            }
-        ]
-    }
-    return render(request, 'daftar_stadium.html', dummy_daftar_stadium)
+    result = query_result(f'''
+        SELECT nama, alamat, kapasitas
+        FROM STADIUM ;
+        ''')
+
+    list_stadium = {
+            "daftar_stadium": []
+        }
+
+    for row in result:
+        list_stadium["daftar_stadium"].append({
+            "nama_stadium": row[0],
+            "negara": row[1],
+            "kapasitas": row[2]
+        })
+        
+    return render(request, 'daftar_stadium.html', list_stadium)
 
 @role_required(['ATLET'])
-def daftar_event_by_stadium(request, stadium_id):
-    dummy_daftar_event = {
-        'stadium_id': stadium_id,
-        'daftar_event': [
-            {
-                'id': 1,
-                'nama_event': 'Badminton Open',
-                'total_hadiah': 'Rp 5.000.000',
-                'tanggal_mulai': '12-04-2023',
-                'kategori': 'S200',
-                'kapasitas_terisi': 3,
-                'kapasitas_total': 8
-            },
-            {
-                'id': 2,
-                'nama_event': 'Bali Open',
-                'total_hadiah': 'Rp 4.000.000',
-                'tanggal_mulai': '27-04-2023',
-                'kategori': 'S100',
-                'kapasitas_terisi': 8,
-                'kapasitas_total': 8
-            },
-            {
-                'id': 3,
-                'nama_event': 'Jakarta Invitational',
-                'total_hadiah': 'Rp 7.500.000',
-                'tanggal_mulai': '15-05-2023',
-                'kategori': 'S300',
-                'kapasitas_terisi': 4,
-                'kapasitas_total': 10
-            },
-            {
-                'id': 4,
-                'nama_event': 'Surabaya Championship',
-                'total_hadiah': 'Rp 3.500.000',
-                'tanggal_mulai': '02-06-2023',
-                'kategori': 'S150',
-                'kapasitas_terisi': 6,
-                'kapasitas_total': 10
-            },
-            {
-                'id': 5,
-                'nama_event': 'Yogyakarta Masters',
-                'total_hadiah': 'Rp 6.000.000',
-                'tanggal_mulai': '18-06-2023',
-                'kategori': 'S250',
-                'kapasitas_terisi': 2,
-                'kapasitas_total': 6
-            }
-        ]
-    }
-    return render(request, 'daftar_event_by_stadium.html', dummy_daftar_event)
+def daftar_event_by_stadium(request, nama_stadium):
+
+    current_date = date.today()
+    formatted_date = current_date.strftime("%Y-%m-%d")
+    # result = query_result(f'''
+    #     SELECT E.nama_event, E.total_hadiah, E.tgl_mulai, E.kategori_superseries
+    #     FROM EVENT as E
+    #     WHERE tgl_mulai <= '{formatted_date}' 
+    #     AND E.nama_stadium = '{nama_stadium}';
+    #     ''')
+
+    result = query_result(f'''
+        SELECT DISTINCT E.nama_event, E.total_hadiah, E.tgl_mulai, E.kategori_superseries, S.kapasitas, COUNT(*) as jumlah
+        FROM EVENT as E
+        JOIN PARTAI_PESERTA_KOMPETISI as PPK ON E.nama_event = PPK.nama_event
+        JOIN STADIUM as S ON E.nama_stadium = S.nama
+        WHERE tgl_mulai <= '{formatted_date}' 
+        AND E.nama_stadium = '{nama_stadium}'
+        GROUP BY E.nama_event, E.total_hadiah, E.tgl_mulai, E.kategori_superseries, S.kapasitas;
+        ''')
+
+    list_event_by_stadium = {
+            "daftar_event": []
+        }
+
+    for row in result:
+        list_event_by_stadium["daftar_event"].append({
+            'nama_event': row[0],
+            'total_hadiah': "Rp" + format(row[1], ","),
+            'tanggal_mulai': row[2],
+            'kategori': row[3],
+            'kapasitas_terisi': row[5],
+            'kapasitas_total': row[4]
+        })
+
+    return render(request, 'daftar_event_by_stadium.html', list_event_by_stadium)
 
 @role_required(['ATLET'])
-def daftar_kategori(request, stadium_id, event_id):
-    daftar_stadium= [
-        {
-            'id': 1,
-            'nama_stadium': 'Gelora Bung Karno',
-            'negara': 'Indonesia',
-            'kapasitas': '8'
-        },
-        {
-            'id': 2,
-            'nama_stadium': 'Senayan',
-            'negara': 'Indonesia',
-            'kapasitas': '16'
-        }, 
-        {
-            'id': 3,
-            'nama_stadium': 'Old Trafford',
-            'negara': 'Inggris',
-            'kapasitas': '74'
-        },
-        {
-            'id': 4,
-            'nama_stadium': 'Maracanã',
-            'negara': 'Brasil',
-            'kapasitas': '78'
+def daftar_kategori(request, nama_stadium, nama_event):
+    result_stadium = query_result(f'''
+        SELECT nama, negara
+        FROM STADIUM
+        WHERE nama = '{nama_stadium}';
+        ''')
+
+    result_event = query_result(f'''
+        SELECT E.nama_event, E.total_hadiah, E.tgl_mulai, E.tgl_selesai, E.kategori_superseries
+        FROM EVENT as E
+        AND E.nama_stadium = '{nama_stadium}'
+        AND E.nama_event = '{nama_event}';
+        ''')
+
+    result_kategori = query_result(f'''
+        SELECT DISTINCT jenis_partai, COUNT(*) as jumlah_peserta
+        FROM PARTAI_PESERTA_KOMPETISI 
+        WHERE nama_event = '{nama_event}'
+        GROUP BY jenis_partai, nama_event;
+        ''')
+
+    result_atlet_tanpa_pasangan = query_result(f'''
+        SELECT
+        ''')
+
+    list_kategori_by_event = {
+            'stadium' :[],
+            'event': [],
+            'daftar_kategori' : []
         }
-    ]
-    daftar_event = [
-        {
-            'id': 1,
-            'nama_event': 'Badminton Open',
-            'total_hadiah': 'Rp 5.000.000',
-            'tanggal_mulai': '12-04-2023',
-            'tanggal_selesai': '21-04-2023',
-            'kategori': 'S200',
-            'kapasitas_terisi': 3,
-            'kapasitas_total': 8
-        },
-        {
-            'id': 2,
-            'nama_event': 'Bali Open',
-            'total_hadiah': 'Rp 4.000.000',
-            'tanggal_mulai': '27-04-2023',
-            'tanggal_selesai': '15-05-2023',
-            'kategori': 'S100',
-            'kapasitas_terisi': 8,
-            'kapasitas_total': 8
-        },
-        {
-            'id': 3,
-            'nama_event': 'Jakarta Invitational',
-            'total_hadiah': 'Rp 7.500.000',
-            'tanggal_mulai': '15-05-2023',
-            'tanggal_selesai': '28-05-2023',
-            'kategori': 'S300',
-            'kapasitas_terisi': 4,
-            'kapasitas_total': 10
-        },
-        {
-            'id': 4,
-            'nama_event': 'Surabaya Championship',
-            'total_hadiah': 'Rp 3.500.000',
-            'tanggal_mulai': '02-06-2023',
-            'tanggal_selesai': '21-06-2023',
-            'kategori': 'S150',
-            'kapasitas_terisi': 6,
-            'kapasitas_total': 10
-        },
-        {
-            'id': 5,
-            'nama_event': 'Yogyakarta Masters',
-            'total_hadiah': 'Rp 6.000.000',
-            'tanggal_mulai': '18-06-2023',
-            'tanggal_selesai': '30-06-2023',
-            'kategori': 'S250',
-            'kapasitas_terisi': 2,
-            'kapasitas_total': 6
-        }
-    ]
+
     dummy_daftar_event = {
-        'stadium': daftar_stadium[stadium_id-1],
-        'event': daftar_event[event_id-1],
+        'stadium': "",
+        'event': "",
         'daftar_kategori': [
             {
                 "kategori": "Tunggal Putra",
