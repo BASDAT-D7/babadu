@@ -98,11 +98,11 @@ def daftar_kategori(request, nama_stadium, nama_event):
         SELECT DISTINCT COALESCE(STRING_AGG(M.nama, ', '), '-') as nama_pasangan, PPK.jenis_partai, PPK.nama_event 
         FROM PARTAI_PESERTA_KOMPETISI as PPK
         JOIN PESERTA_KOMPETISI as PK ON PK.nomor_peserta = PPK.nomor_peserta
-        JOIN ATLET_GANDA as AG ON AG.id_atlet_ganda = PK.id_atlet_ganda
-        JOIN ATLET as A ON AG.id_atlet_kualifikasi= A.id
+        JOIN ATLET as A ON PK.id_atlet_kualifikasi= A.id
         JOIN MEMBER as M ON A.id = M.id
         WHERE PPK.nama_event = '{nama_event}'
         AND A.jenis_kelamin = '{jenis_kelamin}'
+        AND PPK.jenis_partai LIKE "G%"
         AND PK.id_atlet_ganda IN (
             SELECT PK2.id_atlet_ganda
             FROM PESERTA_KOMPETISI as PK2
