@@ -110,10 +110,13 @@ def register_umpire(request):
   return render(request, 'register_form/register_umpire.html', context)
 
 def login(request):
+  context = {"error": ""}
   if request.method == "POST":
     # GET DATA
+    nama = request.POST.get("nama")
     email = request.POST.get("email")
-    result = query_result(f"SELECT * FROM member WHERE email='{email}';")
+    result = query_result(f"SELECT * FROM member WHERE nama='{nama}' AND email='{email}';")
+    print(result)
     
     if len(result) != 0:
       user_id = result[0][0]
@@ -128,9 +131,9 @@ def login(request):
       # REDIRECT
       return response
     else:
-      print("MEMBER NOT FOUND")
+      context = {"error": "Nama atau email salah"}
 
-  return render(request, 'login.html')
+  return render(request, 'login.html', context)
 
 def logout(request):
   # DELETE COOKIES
