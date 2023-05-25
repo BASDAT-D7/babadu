@@ -23,7 +23,7 @@
                 <p>{{ pertandingan.tim_1 }}</p>
                 <p>{{ pertandingan.tim_2 }}</p>
                 <div class="flex gap-3 items-center">
-                    <button class="border-2 border-red text-red rounded-full py-1 px-3 hover:bg-red hover:text-black duration-200"><a href="">-</a></button>
+                    <button class="border-2 border-red text-red rounded-full py-1 px-3 hover:bg-red hover:text-black duration-200"><a href="final()">-</a></button>
                     <p>{{ pertandingan.skor_tim_1 }}</p>
                     <button class="border-2 border-green text-green rounded-full py-1 px-3 hover:bg-green hover:text-black duration-200"><a href="">+</a></button>
                 </div>
@@ -48,18 +48,7 @@
             <p class="text-blue font-bold">Skor Tim 1</p>
             <p class="text-blue font-bold">Skor Tim 2</p>
             {% for pertandingan in final %}
-                <p>{{ pertandingan.tim_1 }}</p>
-                <p>{{ pertandingan.tim_2 }}</p>
-                <div class="flex gap-3 items-center">
-                    <button class="border-2 border-red text-red rounded-full py-1 px-3 hover:bg-red hover:text-black duration-200"><a href="">-</a></button>
-                    <p>{{ pertandingan.skor_tim_1 }}</p>
-                    <button class="border-2 border-green text-green rounded-full py-1 px-3 hover:bg-green hover:text-black duration-200"><a href="">+</a></button>
-                </div>
-                <div class="flex gap-3 items-center">
-                    <button class="border-2 border-red text-red rounded-full py-1 px-3 hover:bg-red hover:text-black duration-200"><a href="">-</a></button>
-                    <p>{{ pertandingan.skor_tim_2 }}</p>
-                    <button class="border-2 border-green text-green rounded-full py-1 px-3 hover:bg-green hover:text-black duration-200"><a href="">+</a></button>
-                </div>
+                <div id="list-pertandingan-final"></div>
             {% endfor %}
         </div>
     </div>
@@ -67,4 +56,90 @@
         <button class="border-2 border-green text-green rounded-xl py-2 px-6 hover:bg-green hover:text-black duration-200"><a href="/hasil-pertandingan/">Done</a></button>
     </div>
 </div>
+
+<script>
+    function increment(id) {
+        document.getElementById('demoInput').stepUp();
+    }
+    function decrement(id) {
+        document.getElementById('demoInput').stepDown();
+    }
+    function whenSubmit() {
+        e.preventDefault();
+        $.post("/latih-atlet/submit/", {
+            atlet: $('#atlet option:selected').val(),
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+        }, function(data) {
+            if (data == 1) {
+                $('#modal').html(modal);
+            } else {
+                window.location.href = '/list-atlet';
+            }
+        });
+    }
+
+    $(document).onload(function(data) {
+        // load pertandingan juara 3
+        $('#list-pertandingan-final').clear();
+        var rowJuara3 = '';
+
+        for (var i = 0; i < data.pere; i++) {
+            rowJuara3 += `
+                <p>{{ pertandingan.tim_1 }}</p>
+                <p>{{ pertandingan.tim_2 }}</p>
+                <div class="flex gap-3 items-center">
+                    <button class="border-2 border-red text-red rounded-full py-1 px-3 hover:bg-red hover:text-black duration-200" onclick="increment()"><a href="">-</a></button>
+                    <p>{{ pertandingan.skor_tim_1 }}</p>
+                    <input id="" type=number min=0>
+                    <button class="border-2 border-green text-green rounded-full py-1 px-3 hover:bg-green hover:text-black duration-200"><a href="">+</a></button>
+                </div>
+                <div class="flex gap-3 items-center">
+                    <button class="border-2 border-red text-red rounded-full py-1 px-3 hover:bg-red hover:text-black duration-200"><a href="">-</a></button>
+                    <p>{{ pertandingan.skor_tim_2 }}</p>
+                    <button class="border-2 border-green text-green rounded-full py-1 px-3 hover:bg-green hover:text-black duration-200"><a href="">+</a></button>
+                </div>
+            `
+        }
+        $('#list-pertandingan').append(rowJuara3);
+
+
+        // load pertandingan final
+        $('#list-pertandingan-final').clear();
+        var rowFinal = '';
+
+        for (var i = 0; i < e.length; i++) {
+            rowFinal += `
+                <p>{{ pertandingan.tim_1 }}</p>
+                <p>{{ pertandingan.tim_2 }}</p>
+                <div class="flex gap-3 items-center">
+                    <button class="border-2 border-red text-red rounded-full py-1 px-3 hover:bg-red hover:text-black duration-200" onclick="increment()"><a href="">-</a></button>
+                    <p>{{ pertandingan.skor_tim_1 }}</p>
+                    <input id="" type=number min=0>
+                    <button class="border-2 border-green text-green rounded-full py-1 px-3 hover:bg-green hover:text-black duration-200"><a href="">+</a></button>
+                </div>
+                <div class="flex gap-3 items-center">
+                    <button class="border-2 border-red text-red rounded-full py-1 px-3 hover:bg-red hover:text-black duration-200"><a href="">-</a></button>
+                    <p>{{ pertandingan.skor_tim_2 }}</p>
+                    <button class="border-2 border-green text-green rounded-full py-1 px-3 hover:bg-green hover:text-black duration-200"><a href="">+</a></button>
+                </div>
+            `
+        }
+        $('#list-pertandingan').append(rowFinal);
+    });
+
+    $("#submit").click(function(e) {
+        e.preventDefault();
+        $.post("/pertandingan/final/", {
+            atlet: $('#atlet option:selected').val(),
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+        }, function(data) {
+            if (data == 1) {
+                $('#modal').html(modal);
+            } else {
+                window.location.href = '/list-atlet';
+            }
+        });
+    });
+
+</script>
 {% endblock content %}
