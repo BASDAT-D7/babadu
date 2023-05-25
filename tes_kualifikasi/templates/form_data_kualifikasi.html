@@ -17,25 +17,23 @@
                 <div class="text-black">
                     <div class="py-2">
                         <label class="text-white">Tahun</label><br>
-                        <input id="tahun" name="tahun" type="text" placeholder="Masukkan nomor batch tes" class="rounded-xl w-96 p-1"/>
+                        <input id="tahun" name="tahun" type="text" placeholder="Masukkan nomor batch tes" class="rounded-xl w-96 p-1" required/>
                     </div>
                     <div class="py-2">
                         <label class="text-white">Nomor Batch</label><br>
-                        <input id="nomor_batch" name="nomor_batch" type="text" placeholder="Masukkan nomor batch tes" class="rounded-xl w-96 p-1"/>
+                        <input id="nomor_batch" name="nomor_batch" type="text" placeholder="Masukkan nomor batch tes" class="rounded-xl w-96 p-1" required/>
                     </div>
                     <div class="py-2">
                         <label class="text-white">Tempat Pelaksanaan</label><br>
-                        <input id="tempat_pelaksanaan" name="tempat_pelaksanaan" type="text" placeholder="Masukkan tempat pelaksanaan" class="rounded-xl w-96 p-1"/>
+                        <input id="tempat_pelaksanaan" name="tempat_pelaksanaan" type="text" placeholder="Masukkan tempat pelaksanaan" class="rounded-xl w-96 p-1" required/>
                     </div>
                     <div class="py-2">
                         <label class="text-white">Tanggal Pelaksanaan</label><br>
-                        <input id="tanggal_pelaksanaan" name="tanggal_pelaksanaan" type="date" class="rounded-xl w-64 p-1">
+                        <input id="tanggal_pelaksanaan" name="tanggal_pelaksanaan" type="date" class="rounded-xl w-64 p-1" required>
                     </div>
-                    {% if not send_data_is_valid %}
-                        <div class="flex justify-center pt-6">
-                            <label class="text-redbright text-sm italic">&nbsp;*please complete the form!</label>
-                        </div>
-                    {% endif %}
+                    <div class="flex justify-center pt-6">
+                        <label class="text-redbright text-sm italic">{{ message }}</label>
+                    </div>
                     <div class="flex justify-center gap-5 my-10">
                         <button onclick="buatDataKualifikasi()" class="border-2 border-blue text-blue rounded-xl py-2 px-6 hover:bg-blue hover:text-black duration-200">Next</a></button>
                         <button class="border-2 border-graybright text-graybright rounded-xl py-2 px-6 hover:bg-graybright hover:text-black duration-200"><a href="javascript:history.go(-1)">Back</a></button>

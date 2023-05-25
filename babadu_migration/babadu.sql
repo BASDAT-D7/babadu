@@ -373,11 +373,11 @@ CREATE TABLE IF NOT EXISTS STADIUM
 	PRIMARY KEY (Nama)
 );
 
-INSERT INTO STADIUM (Nama, Alamat, Kapasitas, Negara) VALUES ('Istora Senayan', 'Jakarta', '7000', 'Indonesia'),
-	('Axiata Arena', 'Kuala Lumpur', '13800', 'Malaysia'),
-	('Haixia', 'Fuzhou', '12980', 'China'),
-	('Maruzen', 'Osaka', '10000', 'Japan'),
-	('BICC', 'Bali', '10000', 'Indonesia')
+INSERT INTO STADIUM (Nama, Alamat, Kapasitas, Negara) VALUES ('Istora Senayan', 'Jakarta', '8', 'Indonesia'),
+	('Axiata Arena', 'Kuala Lumpur', '16', 'Malaysia'),
+	('Haixia', 'Fuzhou', '10', 'China'),
+	('Maruzen', 'Osaka', '32', 'Japan'),
+	('BICC', 'Bali', '8', 'Indonesia')
 ON CONFLICT (ID) DO NOTHING;
 
 -- Table EVENT

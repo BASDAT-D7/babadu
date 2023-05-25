@@ -21,13 +21,14 @@ function setNavbar(is_authenticated) {
                       <div class="dropdown-content">
                         <a href="/daftar-event">Daftar Event</a>
                         <a href="/enrolled-event">Enrolled Event</a>
+                        <a href="/enrolled-event/partai-kompetisi/">Enrolled Event Partai Kompetisi</a>
                       </div>
                     </div>
                     <div class="dropdown">
                       <button class="hover:text-blue">Sponsor</button>
                       <div class="dropdown-content">
                         <a href="/daftar-sponsor">Daftar Sponsor</a>
-                        <a href="/NEW-DI-TK-4">List Sponsor</a>
+                        <a href="/daftar-sponsor/list-sponsor/">List Sponsor</a>
                       </div>
                     </div>
                     <a href="/authentication/logout/">
