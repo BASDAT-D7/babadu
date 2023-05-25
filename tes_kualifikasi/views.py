@@ -15,29 +15,30 @@ def convert_date_format(date_string):
 # Create your views here.
 @role_required(['UMPIRE'])
 def form_data_kualifikasi(request):
+    context = {
+        "message": ""
+    }
     if (request.method == 'POST'):
         tahun = request.POST.get('tahun')
         nomor_batch = request.POST.get('nomor_batch')
         tempat_pelaksanaan = request.POST.get('tempat_pelaksanaan')
         tanggal_pelaksanaan = request.POST.get('tanggal_pelaksanaan')
 
-        # HANDLE NONE FORM VALUE
-        if (tahun == ''):
-            context = {
-                "send_data_is_valid": False
-            }
+        # CHECK DATA
+        result = query_result(f"SELECT * FROM ujian_kualifikasi WHERE tahun = '{tahun}' AND batch = '{nomor_batch}' AND tempat = '{tempat_pelaksanaan}' AND tanggal = '{tanggal_pelaksanaan}';")
+        if (len(result) > 0):
+            context["message"] = "Data sudah ada"
             return render(request, 'form_data_kualifikasi.html', context)
 
         # INSERT DATA
-        query_add(f"INSERT INTO ujian_kualifikasi (tahun, batch, tempat, tanggal) VALUES ('{tahun}', '{nomor_batch}', '{tempat_pelaksanaan}', '{tanggal_pelaksanaan}');")
+        try:
+            query_add(f"INSERT INTO ujian_kualifikasi (tahun, batch, tempat, tanggal) VALUES ('{tahun}', '{nomor_batch}', '{tempat_pelaksanaan}', '{tanggal_pelaksanaan}');")
+        except:
+            print("Data gagal ditambahkan")
 
         # REDIRECT
-        response = HttpResponseRedirect(reverse("tes_kualifikasi:form_data_kualifikasi"))
-        return response
-        
-    context = {
-        "send_data_is_valid": True
-    }
+        return HttpResponseRedirect("/tes-kualifikasi/list-ujian/")
+    
     return render(request, 'form_data_kualifikasi.html', context)
 
 @role_required(['ATLET', 'UMPIRE'])
@@ -119,7 +120,8 @@ def pertanyaan_kualifikasi(request, tahun, batch, tempat, tanggal):
         "tahun": tahun,
         "batch": batch,
         "tempat": tempat,
-        "tanggal": str(tanggal)
+        "tanggal": str(tanggal),
+        "message": ""
     }
 
     # Jawaban Soal
@@ -138,10 +140,21 @@ def pertanyaan_kualifikasi(request, tahun, batch, tempat, tanggal):
         jawaban_benar += 1 if (jawaban_soal_4 == context['pertanyaan_kualifikasi'][3]['kunci_jawaban']) else 0
         jawaban_benar += 1 if (jawaban_soal_5 == context['pertanyaan_kualifikasi'][4]['kunci_jawaban']) else 0
 
-        # INSERT DATA
+        # HANDLE SUDAH LULUS
         user_id = request.COOKIES.get('user_id')
+        result = query_result(f"SELECT * FROM atlet_kualifikasi WHERE id_atlet = '{user_id}';")
+        if (len(result) > 0):
+            context['message'] = "Anda sudah lulus ujian kualifikasi"
+            return render(request, 'pertanyaan_kualifikasi.html', context)
+
+        # HANDLE SUDAH PERNAH UJIAN INI
+        result = query_result(f"SELECT * FROM atlet_nonkualifikasi_ujian_kualifikasi WHERE id_atlet = '{user_id}' AND tahun = '{tahun}' AND batch = '{batch}' AND tempat = '{tempat}' AND tanggal = '{tanggal}';")
+        if (len(result) > 0):
+            context['message'] = "Anda sudah pernah mengikuti ujian ini"
+            return render(request, 'pertanyaan_kualifikasi.html', context)
+
+        # INSERT DATA
         hasil_lulus = True if (jawaban_benar >= 4) else False
-        print(user_id, tahun, batch, tempat, tanggal, hasil_lulus)
         query_add(f"""
                     INSERT INTO atlet_nonkualifikasi_ujian_kualifikasi (id_atlet, tahun, batch, tempat, tanggal, hasil_lulus)
                     VALUES ('{user_id}',
@@ -151,8 +164,8 @@ def pertanyaan_kualifikasi(request, tahun, batch, tempat, tanggal):
                         '{tanggal}',
                         '{hasil_lulus}');
                     """)
-        print(hasil_lulus)
-        return HttpResponseRedirect('riwayat_ujian_kualifikasi')
+        # REDIRECT
+        return HttpResponseRedirect("/tes-kualifikasi/riwayat/")
 
     return render(request, 'pertanyaan_kualifikasi.html', context)
 
