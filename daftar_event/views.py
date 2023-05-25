@@ -193,7 +193,16 @@ def tambah_peserta(request, nama_stadium, nama_event, nama_kategori):
                     query_add(f'''
                     INSERT INTO ATLET_GANDA VALUES ('{new_atletganda_uuid}', '{uuid_atlet_kualifikasi_pasangan}', '{user_id}')
                     ''')
-        
+            else:
+                query_add(f'''
+                    INSERT INTO ATLET_GANDA VALUES ('{new_atletganda_uuid}', '{user_id}')
+                    ''')
+                    
+        else:
+            query_add(f'''
+                    INSERT INTO ATLET_GANDA VALUES ('{new_atletganda_uuid}', '{user_id}')
+                    ''')
+
         result_jumlah_peserta_kompetisi = query_result(f'''
         SELECT COUNT(*)
         FROM PESERTA_KOMPETISI;
@@ -216,7 +225,7 @@ def tambah_peserta(request, nama_stadium, nama_event, nama_kategori):
                 ''')
         else:
             query_add(f'''
-                INSERT INTO PESERTA_KOMPETISI (nomor_peserta, id_atlet_ganda, id_atlet_kualifikasi, world_rank, world_tour_rank) VALUES ('{id_peserta_kompetisi}', '{new_atletganda_uuid}', '{user_id}', '{world_rank}', '{world_rank_tour}')
+                INSERT INTO PESERTA_KOMPETISI (nomor_peserta, id_atlet_kualifikasi, world_rank, world_tour_rank) VALUES ('{id_peserta_kompetisi}', '{user_id}', '{world_rank}', '{world_rank_tour}')
                 ''')
         
         partai_dict = {
