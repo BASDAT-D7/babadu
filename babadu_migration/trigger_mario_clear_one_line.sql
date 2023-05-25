@@ -18,7 +18,7 @@ BEGIN
                 last_world_rank := last_world_rank + 1;
                 
                 INSERT INTO atlet_kualifikasi VALUES (NEW.id_atlet, last_world_rank, last_world_rank);
-                UPDATE atlet SET world_rank=(SELECT world_rank FROM atlet_kualifikasi WHERE id_atlet=NEW.id_atlet);
+                UPDATE atlet SET world_rank = ak.world_rank FROM atlet_kualifikasi ak WHERE atlet.id = ak.id_atlet;
 
                 IF EXISTS (SELECT * FROM point_history WHERE id_atlet=NEW.id_atlet AND minggu_ke=EXTRACT(WEEK FROM NEW.tanggal) AND bulan=TO_CHAR(NEW.tanggal, 'Month') AND tahun=EXTRACT(YEAR FROM NEW.tanggal)) THEN
                     UPDATE point_history SET total_point=total_point+50 WHERE id_atlet=NEW.id_atlet AND minggu_ke=EXTRACT(WEEK FROM NEW.tanggal) AND bulan=TO_CHAR(NEW.tanggal, 'Month') AND tahun=EXTRACT(YEAR FROM NEW.tanggal);
