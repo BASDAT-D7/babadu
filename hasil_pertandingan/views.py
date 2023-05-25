@@ -10,7 +10,36 @@ def hasil_pertandingan(request, pertandingan):
         [ partai, nama, tahun ] = pertandingan.split("-")
         hasil_pertandingan = {
             'partai_kompetisi': dict(),
-            'daftar_tahap': []
+            'daftar_tahap': [
+                {
+                "tahap": "Juara 1",
+                "daftar_tim": []
+                },
+                {
+                "tahap": "Juara 2",
+                "daftar_tim": []
+                },
+                {
+                "tahap": "Juara 3",
+                "daftar_tim": []
+                },
+                {
+                "tahap": "Semifinal",
+                "daftar_tim": []
+                },
+                {
+                "tahap": "Perempatan Final",
+                "daftar_tim": []
+                },
+                {
+                "tahap": "R16",
+                "daftar_tim": []
+                },
+                {
+                "tahap": "R32",
+                "daftar_tim": []
+                },
+            ]
         }
         
         # Get detail dari partai kompetisi
@@ -40,37 +69,39 @@ def hasil_pertandingan(request, pertandingan):
 
         # Get detail dari hasil pertandingan
         result = query_result(f'''
-            SELECT jenis_babak, STRING_AGG(CONCAT(ag.nama_ganda, nama), ', ') AS nama
+            SELECT jenis_babak, CONCAT(ag.nama_ganda, nama), status_menang
             FROM (
-                SELECT jenis_babak, id_atlet_ganda, id_atlet_kualifikasi
+                SELECT m.jenis_babak, id_atlet_ganda, id_atlet_kualifikasi, status_menang
                 FROM (
-                    SELECT nomor_peserta 
+                    SELECT nomor_peserta
                     FROM partai_peserta_kompetisi 
-                    WHERE jenis_partai = '{partai}' AND nama_event = '{nama}' AND tahun_event = '{tahun}') ppk
+                    WHERE nama_event = '{nama}' AND tahun_event = '{tahun}') ppk
                 NATURAL JOIN peserta_kompetisi pk
                 NATURAL JOIN peserta_mengikuti_match pmm
-                WHERE status_menang = 't') p
+                NATURAL JOIN match m 
+                WHERE nama_event = '{nama}' AND tahun_event = '{tahun}') p
             LEFT OUTER JOIN (
                 SELECT id_atlet_ganda, CONCAT(m1.nama, ' & ', m2.nama) AS nama_ganda
                 FROM atlet_ganda ag
                 JOIN member m1 ON ag.id_atlet_kualifikasi = m1.id
                 JOIN member m2 ON ag.id_atlet_kualifikasi_2 = m2.id) ag ON p.id_atlet_ganda = ag.id_atlet_ganda
-            LEFT OUTER JOIN member m ON p.id_atlet_kualifikasi = m.id
-            GROUP BY jenis_babak;
+            LEFT OUTER JOIN member m ON p.id_atlet_kualifikasi = m.id;
         ''')
 
-        if len(result) == 0:
-            return render(request, 'hasil_pertandingan.html', hasil_pertandingan)
-
-        tahap_order = ["Juara 1", "Juara 2", "Juara 3", "Semifinal", "Perempat Final", "R16", "R32"]
-
         for row in result:
-            daftar_tim = row[1].split(", ")
-            hasil_pertandingan["daftar_tahap"].append({
-                "jenis_babak": row[0],
-                "daftar_tim": daftar_tim
-            })
-
-        hasil_pertandingan["daftar_tahap"] = sorted(hasil_pertandingan["daftar_tahap"], key=lambda x:tahap_order.index(x["jenis_babak"]))
+            if row[0] == "R32" and row[2] == False:
+                hasil_pertandingan["daftar_tahap"][6]["daftar_tim"].append(row[1])
+            elif row[0] == "R16" and row[2] == False:
+                hasil_pertandingan["daftar_tahap"][5]["daftar_tim"].append(row[1])
+            elif row[0] == "Perempatan Final" and row[2] == False:
+                hasil_pertandingan["daftar_tahap"][4]["daftar_tim"].append(row[1])
+            elif row[0] == "Juara 3" and row[2] == False:
+                hasil_pertandingan["daftar_tahap"][3]["daftar_tim"].append(row[1])
+            elif row[0] == "Juara 3" and row[2] == True:
+                hasil_pertandingan["daftar_tahap"][2]["daftar_tim"].append(row[1])
+            elif row[0] == "Final" and row[2] == False:
+                hasil_pertandingan["daftar_tahap"][1]["daftar_tim"].append(row[1])
+            elif row[0] == "Final" and row[2] == True:
+                hasil_pertandingan["daftar_tahap"][0]["daftar_tim"].append(row[1])
         return render(request, 'hasil_pertandingan.html', hasil_pertandingan)
     return HttpResponse('')
