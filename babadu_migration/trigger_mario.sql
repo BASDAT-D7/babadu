@@ -27,7 +27,7 @@ BEGIN
 
                 RETURN NULL;
             ELSE
-                INSERT INTO atlet_nonkualifikasi_ujian_kualifikasi VALUES (NEW.id_atlet, NEW.tahun, NEW.batch, NEW.tempat, NEW.tanggal, NEW.hasil_lulus);
+                RETURN NEW;
             END IF;
         END IF;
 	END IF;
