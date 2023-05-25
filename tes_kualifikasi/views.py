@@ -121,7 +121,8 @@ def pertanyaan_kualifikasi(request, tahun, batch, tempat, tanggal):
         "tahun": tahun,
         "batch": batch,
         "tempat": tempat,
-        "tanggal": str(tanggal)
+        "tanggal": str(tanggal),
+        "message": ""
     }
 
     # Jawaban Soal
@@ -139,6 +140,13 @@ def pertanyaan_kualifikasi(request, tahun, batch, tempat, tanggal):
         jawaban_benar += 1 if (jawaban_soal_3 == context['pertanyaan_kualifikasi'][2]['kunci_jawaban']) else 0
         jawaban_benar += 1 if (jawaban_soal_4 == context['pertanyaan_kualifikasi'][3]['kunci_jawaban']) else 0
         jawaban_benar += 1 if (jawaban_soal_5 == context['pertanyaan_kualifikasi'][4]['kunci_jawaban']) else 0
+
+        # HANDLE SUDAH PERNAH UJIAN INI
+        user_id = request.COOKIES.get('user_id')
+        result = query_result(f"SELECT * FROM atlet_nonkualifikasi_ujian_kualifikasi WHERE id_atlet = '{user_id}' AND tahun = '{tahun}' AND batch = '{batch}' AND tempat = '{tempat}' AND tanggal = '{tanggal}';")
+        if (len(result) > 0):
+            context['message'] = "Anda sudah pernah mengikuti ujian ini"
+            return render(request, 'pertanyaan_kualifikasi.html', context)
 
         # INSERT DATA
         user_id = request.COOKIES.get('user_id')
