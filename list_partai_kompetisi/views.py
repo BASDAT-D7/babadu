@@ -8,11 +8,12 @@ from babadu_function.general import *
 def list_partai_kompetisi(request):
     if get_current_user(request)["user_role"] == "UMPIRE":
         result = query_result('''
-        SELECT pk.nama_event, tahun_event, nama_stadium, jenis_partai, kategori_superseries, tgl_mulai, tgl_selesai, k.kapasitas, s.kapasitas
+        SELECT pk.nama_event, tahun_event, nama_stadium, pk.jenis_partai, kategori_superseries, tgl_mulai, tgl_selesai, k.kapasitas, s.kapasitas
         FROM partai_kompetisi pk
         JOIN event e on pk.nama_event = e.nama_event
         JOIN stadium s on e.nama_stadium = s.nama
-        JOIN (SELECT nama_event, COUNT(nomor_peserta) AS kapasitas FROM partai_peserta_kompetisi GROUP BY nama_event) AS k ON pk.nama_event = k.nama_event;
+        JOIN (SELECT nama_event, jenis_partai, COUNT(nomor_peserta) AS kapasitas FROM partai_peserta_kompetisi GROUP BY nama_event, jenis_partai) AS k 
+            ON pk.nama_event = k.nama_event AND pk.jenis_partai = k.jenis_partai;
         ''')
 
         partai_kompetisi = {
