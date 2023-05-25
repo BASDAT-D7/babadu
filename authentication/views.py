@@ -24,14 +24,6 @@ def register_atlet(request):
     jenis_kelamin = request.POST.get("jenis_kelamin")
     play = request.POST.get("play")
 
-    # TSP : EMAIL VALIDATION
-    # is_email_exist = True if len(query_result(f"SELECT email FROM member WHERE email='{email}';")) > 1 else False
-    # if (is_email_exist):
-    #   context = {
-    #     "is_email_exist": True
-    #   }
-    #   return render(request, 'register_form/register_atlet.html', context)
-
     # INSERT DATA
     try:
       query_add(f"INSERT INTO member (id, nama, email) VALUES ('{user_id}', '{nama}', '{email}');")
@@ -39,6 +31,7 @@ def register_atlet(request):
 
       # REDIRECT
       response = HttpResponseRedirect(reverse("dashboard:dashboard"))
+      print(response)
       return response
     except:
       context = {
@@ -74,7 +67,7 @@ def register_pelatih(request):
       context = {
         "is_email_exist": True
       }
-      return render(request, 'register_form/register_atlet.html', context)
+      return render(request, 'register_form/register_pelatih.html', context)
 
   context = {
     "is_email_exist": False
@@ -101,7 +94,7 @@ def register_umpire(request):
       context = {
         "is_email_exist": True
       }
-      return render(request, 'register_form/register_atlet.html', context)
+      return render(request, 'register_form/register_umpire.html', context)
 
   context = {
     "is_email_exist": False
@@ -125,7 +118,7 @@ def login(request):
       # SET COOKIES
       response.set_cookie('user_id', user_id)
       response.set_cookie('user_role', user_role)
-      response.set_cookie('is_authenticated', True)
+      response.set_cookie('is_authenticated', "True")
       
       # REDIRECT
       return response
@@ -136,7 +129,7 @@ def login(request):
 
 def logout(request):
   # DELETE COOKIES
-  response = HttpResponseRedirect(reverse('authentication:login'))
+  response = HttpResponseRedirect(reverse('authentication:authentication'))
   response.delete_cookie('user_id')
   response.delete_cookie('user_role')
   response.delete_cookie('is_authenticated')
