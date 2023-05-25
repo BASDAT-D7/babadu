@@ -62,11 +62,15 @@ def hasil_pertandingan(request, pertandingan):
         if len(result) == 0:
             return render(request, 'hasil_pertandingan.html', hasil_pertandingan)
 
+        tahap_order = ["Juara 1", "Juara 2", "Juara 3", "Semifinal", "Perempat Final", "R16", "R32"]
+
         for row in result:
             daftar_tim = row[1].split(", ")
             hasil_pertandingan["daftar_tahap"].append({
                 "jenis_babak": row[0],
                 "daftar_tim": daftar_tim
             })
+
+        hasil_pertandingan["daftar_tahap"] = sorted(hasil_pertandingan["daftar_tahap"], key=lambda x:tahap_order.index(x["jenis_babak"]))
         return render(request, 'hasil_pertandingan.html', hasil_pertandingan)
     return HttpResponse('')
