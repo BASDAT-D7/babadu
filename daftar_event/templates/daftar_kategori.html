@@ -6,61 +6,94 @@
 {% endblock meta %}
 
 {% block content %}
+
 <div class="bg-gradient-to-bl from-indigo-500/20 pt-28 pb-96 h-full">
+    {% with data=stadium_event.0 %}
     <div class="flex gap-10 justify-center">
         <h1 class="flex justify-center shadow-2xl text-4xl text-white mb-10">Pilih Kategori</h1>
     </div>  
     <div class="flex gap-10 justify-center">
         <div class="grid grid-cols-4 gap-y-6 gap-x-24 bg-gray/20 text-white shadow-inner border-white rounded-3xl py-12 px-16">
+            
             <div>
                 <p class="text-sm opacity-50">Event</p>
-                <p>{{ event.nama_event }}</p>
+                <p>{{ data.nama_event }}</p>
             </div>
             <div>
                 <p class="text-sm opacity-50">Hadiah</p>
-                <p>{{ event.total_hadiah }}</p>
+                <p>{{ data.total_hadiah }}</p>
             </div>
             <div>
                 <p class="text-sm opacity-50">Tanggal Mulai</p>
-                <p>{{ event.tanggal_mulai }}</p>
+                <p>{{ data.tanggal_mulai }}</p>
             </div>
             <div>
                 <p class="text-sm opacity-50">Tanggal Selesai</p>
-                <p>{{ event.tanggal_selesai }}</p>
+                <p>{{ data.tanggal_selesai }}</p>
             </div> 
             <div>
                 <p class="text-sm opacity-50">Kategori</p>
-                <p>{{ event.kategori }}</p>
+                <p>{{ data.kategori }}</p>
             </div>  
             <div>
                 <p class="text-sm opacity-50">Kapasitas</p>
-                <p>{{ event.kapasitas_terisi }}/{{ event.kapasitas_total }}</p>
+                <p>{{ data.kapasitas_terisi }}/{{ data.kapasitas_total }}</p>
             </div> 
             <div>
                 <p class="text-sm opacity-50">Stadium</p>
-                <p>{{ stadium.nama_stadium }}</p>
+                <p>{{ data.nama_stadium }}</p>
             </div> 
             <div>
                 <p class="text-sm opacity-50">Negara</p>
-                <p>{{ stadium.negara }}</p>
+                <p>{{ data.negara }}</p>
             </div> 
+            
         </div>  
     </div>
     <div class="flex gap-10 justify-center py-4">
-        <div class="grid grid-cols-3 gap-y-6 gap-x-24 bg-gray/20 text-white shadow-inner border-white rounded-3xl py-12 px-16 items-center mx-10">
-            <p class="text-blue font-bold">Kategori</p>
-            <p class="text-blue font-bold">Partner</p>
-            <p class="text-blue font-bold"></p>
-            {% for k in daftar_kategori %}
+        <div class="flex gap-10 justify-center py-4">
+            <div class="grid grid-cols-4 gap-y-6 gap-x-24 bg-gray/20 text-white shadow-inner border-white rounded-3xl py-12 px-16 items-center mx-10">
+              <p class="text-blue font-bold">Kategori</p>
+              <p class="text-blue font-bold">Partner</p>
+              <p class="text-blue font-bold">Kapasitas</p>
+              <p class="text-blue font-bold"></p>
+          
+              {% for k in daftar_kategori %}
                 <p>{{ k.kategori }}</p>
-                <select name="partner" id="partner" class="rounded-xl text-black w-64 p-1">
-                    {% for partner in k.partner %}
-                        <option value="{{ partner }}">{{ partner }}</option>
-                    {% endfor %}
-                </select>
-                <button class="border-2 border-green text-green rounded-xl py-2 px-6 hover:bg-green hover:text-black duration-200"><a href="/daftar-event/stadium/{{ stadium.id }}/event/{{ event.id }}/">Daftar</a></button>
-            {% endfor %}
-        </div>
-    </div>
+                <form id="nama_atlet_{{ k.kategori }}" method="POST" action="/daftar-event/stadium/{{ data.nama_stadium}}/event/{{ data.nama_event }}/daftar/{{k.kategori}}">
+                    {% csrf_token %} 
+                        <select name="partner" class="rounded-xl text-black w-64 p-1">
+                        {% for p in daftar_pemain %}
+                            {% if k.kategori == p.partai %}
+                                {% for partner in p.pasangan %}
+                                    <option value="{{ partner }}">{{ partner }}</option>
+                                {% endfor %}
+                            {% else %}
+                                <option value="-">-</option>
+                            {% endif %}
+                        {% endfor %}
+                        </select>
+                </form>
+                <p>{{ k.jumlah_peserta }}/{{ data.kapasitas_total }}</p>
+                {% if jenis_kelamin %}
+                    {% if k.kategori == 'Tunggal Putra' or k.kategori == 'Ganda Putra' or k.kategori == 'Ganda Campuran' %}
+                        <button type="submit" form= "nama_atlet_{{ k.kategori }}" class="border-2 border-green text-green rounded-xl py-2 px-6 hover:bg-green hover:text-black duration-200">Daftar</button>
+                    {% else %}
+                        <button class="hidden-button" disabled></button>
+                    {% endif %}
+    
+                {% else %}
+                    {% if k.kategori == 'Tunggal Putri' or k.kategori == 'Ganda Putri' or k.kategori == 'Ganda Campuran' %}
+                        <button type="submit" form= "nama_atlet_{{ k.kategori }}"  class="border-2 border-green text-green rounded-xl py-2 px-6 hover:bg-green hover:text-black duration-200">Daftar</button>
+                    {% else %}
+                        <button class="hidden-button" disabled></button>
+                    {% endif %}
+                {% endif %}
+                
+              {% endfor %}
+            </div>
+          </div>
+          
+    {% endwith %}
 </div>
 {% endblock content %}
