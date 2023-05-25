@@ -18,11 +18,11 @@
                     <div class="flex gap-10">
                         <div class="py-2">
                             <label class="text-white">Nama</label><br>
-                            <input id="nama" name="nama" type="text" placeholder="Masukkan nama Anda" class="rounded-xl w-64 p-1"/>
+                            <input id="nama" name="nama" type="text" placeholder="Masukkan nama Anda" class="rounded-xl w-64 p-1" required/>
                         </div>
                         <div class="py-2">
                             <label class="text-white">Email</label><br>
-                            <input id="email" name="email" type="text" placeholder="example@gmail.com" class="rounded-xl w-64 p-1"/>
+                            <input id="email" name="email" type="text" placeholder="example@gmail.com" class="rounded-xl w-64 p-1" required/>
                             {% if is_email_exist %}
                             <br><label class="text-redbright text-sm italic">&nbsp;*email already exists!</label>
                             {% endif %}
@@ -31,11 +31,11 @@
                     <div class="flex gap-10">
                         <div class="py-2">
                             <label class="text-white">Negara</label><br>
-                            <input id="negara" name="negara" type="text" placeholder="Kewarganegaraan Anda" class="rounded-xl w-64 p-1"/>
+                            <input id="negara" name="negara" type="text" placeholder="Kewarganegaraan Anda" class="rounded-xl w-64 p-1" required/>
                         </div>
                         <div class="py-2">
                             <label class="text-white">Tanggal Mulai</label><br>
-                            <input id="tanggal_mulai" name="tanggal_mulai" type="date" id="tanggal_mulai" name="tanggal_mulai" class="rounded-xl w-64 p-1">
+                            <input id="tanggal_mulai" name="tanggal_mulai" type="date" id="tanggal_mulai" name="tanggal_mulai" class="rounded-xl w-64 p-1" required>
                         </div>
                     </div>
                     <div class="py-2">
