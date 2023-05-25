@@ -141,6 +141,7 @@ def pertanyaan_kualifikasi(request, tahun, batch, tempat, tanggal):
         # INSERT DATA
         user_id = request.COOKIES.get('user_id')
         hasil_lulus = True if (jawaban_benar >= 4) else False
+        print(user_id, tahun, batch, tempat, tanggal, hasil_lulus)
         query_add(f"""
                     INSERT INTO atlet_nonkualifikasi_ujian_kualifikasi (id_atlet, tahun, batch, tempat, tanggal, hasil_lulus)
                     VALUES ('{user_id}',
@@ -151,6 +152,7 @@ def pertanyaan_kualifikasi(request, tahun, batch, tempat, tanggal):
                         '{hasil_lulus}');
                     """)
         print(hasil_lulus)
+        return HttpResponseRedirect('riwayat_ujian_kualifikasi')
 
     return render(request, 'pertanyaan_kualifikasi.html', context)
 
