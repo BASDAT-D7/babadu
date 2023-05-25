@@ -15,10 +15,15 @@ BEGIN
             INSERT INTO atlet_kualifikasi VALUES (NEW.id_atlet, last_world_rank, last_world_rank);
             UPDATE atlet SET world_rank=(SELECT world_rank FROM atlet_kualifikasi WHERE id_atlet=NEW.id_atlet);
 
-                        
-
-            RAISE EXCEPTION 'Atlet Lulus';
+            IF EXISTS (SELECT * FROM point_history WHERE id_atlet=NEW.id_atlet AND minggu_ke=EXTRACT(WEEK FROM NEW.tanggal) AND bulan=TO_CHAR(NEW.tanggal, 'Month') AND tahun=EXTRACT(YEAR FROM NEW.tanggal)) THEN
+                UPDATE point_history SET total_point=total_point+50 WHERE id_atlet=NEW.id_atlet AND minggu_ke=EXTRACT(WEEK FROM NEW.tanggal) AND bulan=TO_CHAR(NEW.tanggal, 'Month') AND tahun=EXTRACT(YEAR FROM NEW.tanggal);
+            ELSE
+                INSERT INTO point_history VALUES (NEW.id_atlet, 50, EXTRACT(WEEK FROM NEW.tanggal), TO_CHAR(NEW.tanggal, 'Month'), EXTRACT(YEAR FROM NEW.tanggal));
+            END IF;
+        ELSE
+            INSERT INTO atlet_nonkualifikasi_ujian_kualifikasi VALUES (NEW.id_atlet, NEW.tahun, NEW.batch, NEW.tempat, NEW.tanggal, NEW.hasil_lulus);
         END IF;
+
 	END IF;
 	RETURN NEW;
 END;
