@@ -693,10 +693,6 @@ ON CONFLICT (ID) DO NOTHING;
 -- menghapus seluruh riwayat ujian yang
 -- pernah diambil atlet non-kualifikasi tersebut.
 
-CREATE OR REPLACE FUNCTION mario_delete_riwayat_dan_update_status_atlet()
-RETURNS TRIGGER AS $$
-
-
 -- Adapun world rank dan world tour rank atlet
 -- tersebut juga akan disesuaikan menjadi rank
 -- terakhir dari rank keseluruhan yang ada. Untuk
@@ -708,42 +704,23 @@ RETURNS TRIGGER AS $$
 -- kualifikasi yang diambil oleh atlet tersebut jika
 -- hasilnya lulus.
 
-CREATE OR REPLACE FUNCTION mario_update_rank_atlet()
-RETURNS TRIGGER AS $$
-BEGIN
-	IF EXISTS (SELECT * FROM ujian_kualifikasi_atlet WHERE id_atlet = NEW.id_atlet AND id_uk = NEW.id_uk) THEN
-		IF NEW.hasil = 'Lulus' THEN
-			UPDATE atlet SET world_rank = (SELECT world_rank FROM ujian_kualifikasi WHERE id = NEW.id_uk), world_tour_rank = (SELECT world_tour_rank FROM ujian_kualifikasi WHERE id = NEW.id_uk), total_point = total_point + 50 WHERE id = NEW.id_atlet;
-		END IF;
-	END IF;
-	RETURN NEW;
-END;
-
-CREATE TRIGGER mario_update_rank_atlet
-AFTER INSERT ON ujian_kualifikasi_atlet
-FOR EACH ROW
-EXECUTE PROCEDURE mario_update_rank_atlet();
-
 -- Jika hasilnya tidak lulus, maka statusnya tidak
 -- berubah dan sistem hanya akan menyimpan
 -- data mengenai ujian kualifikasi yang diambil
 -- oleh atlet non-kualifikasi tersebut.
 
-CREATE OR REPLACE FUNCTION mario_update_rank_atlet2()
+CREATE OR REPLACE FUNCTION mario_delete_riwayat_dan_update_status_atlet()
 RETURNS TRIGGER AS $$
 BEGIN
-	IF EXISTS (SELECT * FROM ujian_kualifikasi_atlet WHERE id_atlet = NEW.id_atlet AND id_uk = NEW.id_uk) THEN
-		IF NEW.hasil = 'Tidak Lulus' THEN
-			INSERT INTO ujian_kualifikasi_atlet (id_atlet, id_uk, hasil) VALUES (NEW.id_atlet, NEW.id_uk, NEW.hasil);
+	IF NOT EXISTS (SELECT * FROM atlet_nonkualifikasi_ujian_kualifikasi WHERE id_atlet=NEW.id_atlet AND tahun=NEW.tahun AND batch=NEW.batch AND tanggal=NEW.tanggal) THEN
+		IF NEW.hasil = 'Lulus' THEN
+			DELETE FROM atlet_nonkualifikasi_ujian_kualifikasi WHERE id_atlet = NEW.id_atlet;
+			INSERT 
+			UPDATE atlet SET status = 'Qualified' WHERE id = NEW.id_atlet;
 		END IF;
 	END IF;
 	RETURN NEW;
 END;
-
-CREATE TRIGGER mario_update_rank_atlet2
-AFTER INSERT ON ujian_kualifikasi_atlet
-FOR EACH ROW
-EXECUTE PROCEDURE mario_update_rank_atlet2();
 
 -- Untuk atlet kualifikasi yang mengambil ujian
 -- kualifikasi kembali, statusnya tidak akan
