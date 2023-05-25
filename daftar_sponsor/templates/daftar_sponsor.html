@@ -13,9 +13,9 @@
             <div class="text-black">
                 <div class="py-2">
                     <label class="text-white">Nama Sponsor</label><br>
-                    <select name="sponsor" id="sponsor" class="rounded-xl w-96 p-1">
-                        {% for sponsor in daftar_sponsor %}
-                            <option value="{{ sponsor.nama_sponsor }}">{{ sponsor.nama_sponsor }}</option>
+                    <select name="nama_sponsor" id="id_sponsor" class="rounded-xl w-96 p-1">
+                        {% for sponsor in list_daftar_sponsor %}
+                            <option value="{{ sponsor.nama_brand }}">{{ sponsor.nama_brand }}</option>
                         {% endfor %}
                     </select>
                 </div>
