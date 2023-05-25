@@ -1,23 +1,34 @@
--- TRIGGER & STORED PROCEDURE
-
--- DESCRIPTION 1
--- Ketika seorang atlet mengikuti ujian
--- kualifikasi, perlu dilakukan pengecekan apakah
--- ia sudah pernah mengikuti ujian kualifikasi
--- yang ia pilih tersebut atau tidak. Jika sudah
--- pernah (terlepas dari hasil yang ia dapatkan),
--- tampilkan pesan error.
-
 CREATE OR REPLACE FUNCTION mario_cek_atlet_pernah_ikut_ujian()
 RETURNS TRIGGER AS $$
+DECLARE last_world_rank integer;
 BEGIN
-    -- Atlet sudah pernah mengikuti ujian kualifikasi tersebut
-	IF EXISTS (SELECT * FROM atlet_nonkualifikasi_ujian_kualifikasi WHERE id_atlet=NEW.id_atlet AND tahun=NEW.tahun AND batch=NEW.batch AND tanggal=NEW.tanggal) THEN
-		RAISE EXCEPTION 'Atlet sudah pernah mengikuti ujian kualifikasi';
-    -- Atlet belum pernah mengikuti ujian kualifikasi tersebut
+    IF EXISTS (SELECT * FROM atlet_kualifikasi WHERE id_atlet=NEW.id_atlet) THEN
+        RAISE EXCEPTION 'Atlet sudah lulus ujian kualifikasi';
     ELSE
-        IF (NEW.hasil='1') THEN
-            RAISE EXCEPTION 'ATLET LULUS';
+        IF EXISTS (SELECT * FROM atlet_nonkualifikasi_ujian_kualifikasi WHERE id_atlet=NEW.id_atlet AND tahun=NEW.tahun AND batch=NEW.batch AND tanggal=NEW.tanggal) THEN
+            RAISE EXCEPTION 'Atlet sudah pernah mengikuti ujian kualifikasi';
+        ELSE
+            IF (NEW.hasil_lulus='1') THEN
+                DELETE FROM atlet_nonkualifikasi_ujian_kualifikasi WHERE id_atlet=NEW.id_atlet;
+                DELETE FROM atlet_non_kualifikasi WHERE id_atlet=NEW.id_atlet;
+
+                SELECT COUNT(*) INTO last_world_rank
+                FROM atlet_kualifikasi;
+                last_world_rank := last_world_rank + 1;
+                
+                INSERT INTO atlet_kualifikasi VALUES (NEW.id_atlet, last_world_rank, last_world_rank);
+                UPDATE atlet SET world_rank = ak.world_rank FROM atlet_kualifikasi ak WHERE atlet.id = ak.id_atlet;
+
+                IF EXISTS (SELECT * FROM point_history WHERE id_atlet=NEW.id_atlet AND minggu_ke=EXTRACT(WEEK FROM NEW.tanggal) AND bulan=TO_CHAR(NEW.tanggal, 'Month') AND tahun=EXTRACT(YEAR FROM NEW.tanggal)) THEN
+                    UPDATE point_history SET total_point=total_point+50 WHERE id_atlet=NEW.id_atlet AND minggu_ke=EXTRACT(WEEK FROM NEW.tanggal) AND bulan=TO_CHAR(NEW.tanggal, 'Month') AND tahun=EXTRACT(YEAR FROM NEW.tanggal);
+                ELSE
+                    INSERT INTO point_history VALUES (NEW.id_atlet, EXTRACT(WEEK FROM NEW.tanggal), TO_CHAR(NEW.tanggal, 'Month'), EXTRACT(YEAR FROM NEW.tanggal), 50);
+                END IF;
+
+                RETURN NULL;
+            ELSE
+                INSERT INTO atlet_nonkualifikasi_ujian_kualifikasi VALUES (NEW.id_atlet, NEW.tahun, NEW.batch, NEW.tempat, NEW.tanggal, NEW.hasil_lulus);
+            END IF;
         END IF;
 	END IF;
 	RETURN NEW;
@@ -27,22 +38,3 @@ CREATE TRIGGER mario_cek_atlet_pernah_ikut_ujian
 BEFORE INSERT ON atlet_nonkualifikasi_ujian_kualifikasi
 FOR EACH ROW
 EXECUTE PROCEDURE mario_cek_atlet_pernah_ikut_ujian();
--- TESTS
--- 1. Atlet pernah mengikuti ujian kualifikasi yang dipilih
--- Expectation: Error
-INSERT INTO atlet_nonkualifikasi_ujian_kualifikasi VALUES ('2e0d9f03-3158-4e4a-a928-1e0a6c838d42', '2023', '1', 'Jakarta', '2023-02-26', '0');
--- 2. Atlet belum pernah mengikuti ujian kualifikasi
--- Expectation: Success
-INSERT INTO atlet_nonkualifikasi_ujian_kualifikasi VALUES ('d7bbec6c-01f4-4cc1-89b8-2be2b0cba371', '2023', '1', 'Jakarta', '2023-02-26', '1');
-DELETE FROM atlet_nonkualifikasi_ujian_kualifikasi WHERE id_atlet='d7bbec6c-01f4-4cc1-89b8-2be2b0cba371' AND tahun='2023' AND batch='1' AND tanggal='2023-02-26';
--- 3. Atlet pernah mengikuti ujian kualifikasi, tetapi bukan yang dipilih
-INSERT INTO atlet_nonkualifikasi_ujian_kualifikasi VALUES ('2e0d9f03-3158-4e4a-a928-1e0a6c838d42', '2022', '2', 'Bogor', '2022-06-10', '0');
-DELETE FROM atlet_nonkualifikasi_ujian_kualifikasi WHERE id_atlet='2e0d9f03-3158-4e4a-a928-1e0a6c838d42' AND tahun='2022' AND batch='2' AND tanggal='2022-06-10';
--- Expectation: Success
--- 4. Atlet lulus ujian kualifikasi
-INSERT INTO atlet_nonkualifikasi_ujian_kualifikasi VALUES ('75011b5f-723e-4b11-8314-80656c46c346', '2022', '2', 'Bogor', '2022-06-10', '1');
-DELETE FROM atlet_nonkualifikasi_ujian_kualifikasi WHERE id_atlet='75011b5f-723e-4b11-8314-80656c46c346' AND tahun='2022' AND batch='2' AND tanggal='2022-06-10';
--- RESET
-DROP TRIGGER IF EXISTS mario_cek_atlet_pernah_ikut_ujian ON atlet_nonkualifikasi_ujian_kualifikasi;
-DROP FUNCTION IF EXISTS mario_cek_atlet_pernah_ikut_ujian;
-
