@@ -13,6 +13,8 @@ function buatDataKualifikasi() {
 function jawabPertanyaanKualifikasi(tahun, batch, tempat, tanggal) {
   const jawab_pertanyaan_kualifikasi = $("#jawab_pertanyaan_kualifikasi");
 
+  console.log("TEST");
+
   $.ajax({
     type: "POST",
     url: `/tes-kualifikasi/pertanyaan/${tahun}/${batch}/${tempat}/${tanggal}/`,
