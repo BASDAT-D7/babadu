@@ -48,8 +48,8 @@
             <p class="text-blue font-bold">Tahap</p>
             <p class="text-blue font-bold">Nama Tim</p>
             {% for tahap in daftar_tahap %}
-                <p>{{ tahap.nama_tahap }}</p>
-                <div class="flex flex-col gap-5">
+                <p>{{ tahap.tahap }}</p>
+                <div class="flex flex-col gap-5 mt-5">
                 {% for tim in tahap.daftar_tim %}
                     <p>{{ tim }}</p>
                 {% endfor %}

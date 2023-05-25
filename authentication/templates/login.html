@@ -17,16 +17,19 @@
                 <div class="text-black">
                     <div class="py-2">
                         <label class="text-white">Nama</label><br>
-                        <input id="nama" name="nama" type="text" placeholder="Masukkan nama Anda" class="rounded-xl w-64 p-1"/>
+                        <input id="nama" name="nama" type="text" placeholder="Masukkan nama Anda" class="rounded-xl w-64 p-1" required/>
                     </div>
                     <div class="py-2">
                         <label class="text-white">Email</label><br>
-                        <input id="email" name="email" type="text" placeholder="example@gmail.com" class="rounded-xl w-64 p-1"/>
+                        <input id="email" name="email" type="text" placeholder="example@gmail.com" class="rounded-xl w-64 p-1" required/>
                     </div>
                 </div>
+                {% if is_error %}
+                    <p class="text-center text-red text-1xl mt-4">Nama atau email salah</p>
+                {% endif %}
                 <div class="flex justify-center gap-5 my-10">
-                    <button onclick="login()" class="border-2 border-blue text-blue rounded-xl py-2 px-6 hover:bg-blue hover:text-black duration-200">Login</button>
-                    <button class="border-2 border-graybright text-graybright rounded-xl py-2 px-6 hover:bg-graybright hover:text-black duration-200"><a href="javascript:history.go(-1)">Cancel</a></button>
+                    <button class="border-2 border-blue text-blue rounded-xl py-2 px-6 hover:bg-blue hover:text-black duration-200">Login</button>
+                    <button onclick="window.history.go(-1); return false;" class="border-2 border-graybright text-graybright rounded-xl py-2 px-6 hover:bg-graybright hover:text-black duration-200"><a>Cancel</a></button>
                 </div>
             </form>
         </div>
