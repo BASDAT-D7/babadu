@@ -2,7 +2,6 @@ CREATE OR REPLACE FUNCTION mario_cek_atlet_pernah_ikut_ujian()
 RETURNS TRIGGER AS $$
 DECLARE last_world_rank integer;
 BEGIN
-
     IF EXISTS (SELECT * FROM atlet_kualifikasi WHERE id_atlet=NEW.id_atlet) THEN
         RAISE EXCEPTION 'Atlet sudah lulus ujian kualifikasi';
     ELSE
@@ -25,6 +24,8 @@ BEGIN
                 ELSE
                     INSERT INTO point_history VALUES (NEW.id_atlet, EXTRACT(WEEK FROM NEW.tanggal), TO_CHAR(NEW.tanggal, 'Month'), EXTRACT(YEAR FROM NEW.tanggal), 50);
                 END IF;
+
+                RETURN NULL;
             ELSE
                 INSERT INTO atlet_nonkualifikasi_ujian_kualifikasi VALUES (NEW.id_atlet, NEW.tahun, NEW.batch, NEW.tempat, NEW.tanggal, NEW.hasil_lulus);
             END IF;

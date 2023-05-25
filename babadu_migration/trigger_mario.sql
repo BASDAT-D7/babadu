@@ -40,7 +40,7 @@ INSERT INTO atlet_nonkualifikasi_ujian_kualifikasi VALUES ('2e0d9f03-3158-4e4a-a
 DELETE FROM atlet_nonkualifikasi_ujian_kualifikasi WHERE id_atlet='2e0d9f03-3158-4e4a-a928-1e0a6c838d42' AND tahun='2022' AND batch='2' AND tanggal='2022-06-10';
 -- Expectation: Success
 -- 4. Atlet lulus ujian kualifikasi
-INSERT INTO atlet_nonkualifikasi_ujian_kualifikasi VALUES ('f2e40969-1ec7-4443-bcad-77f6d7b57e3b', '2022', '2', 'Bogor', '2022-06-10', '1');
+INSERT INTO atlet_nonkualifikasi_ujian_kualifikasi VALUES ('75011b5f-723e-4b11-8314-80656c46c346', '2022', '2', 'Bogor', '2022-06-10', '1');
 DELETE FROM atlet_nonkualifikasi_ujian_kualifikasi WHERE id_atlet='75011b5f-723e-4b11-8314-80656c46c346' AND tahun='2022' AND batch='2' AND tanggal='2022-06-10';
 -- RESET
 DROP TRIGGER IF EXISTS mario_cek_atlet_pernah_ikut_ujian ON atlet_nonkualifikasi_ujian_kualifikasi;
