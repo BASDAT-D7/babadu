@@ -5,7 +5,7 @@ BEGIN
     IF EXISTS (SELECT * FROM atlet_kualifikasi WHERE id_atlet=NEW.id_atlet) THEN
         RAISE EXCEPTION 'Atlet sudah lulus ujian kualifikasi';
     ELSE
-        IF EXISTS (SELECT * FROM atlet_nonkualifikasi_ujian_kualifikasi WHERE id_atlet=NEW.id_atlet AND tahun=NEW.tahun AND batch=NEW.batch AND tanggal=NEW.tanggal) THEN
+        IF EXISTS (SELECT * FROM atlet_nonkualifikasi_ujian_kualifikasi WHERE id_atlet=NEW.id_atlet AND tahun=NEW.tahun AND tempat=NEW.tempat AND batch=NEW.batch AND tanggal=NEW.tanggal) THEN
             RAISE EXCEPTION 'Atlet sudah pernah mengikuti ujian kualifikasi';
         ELSE
             IF (NEW.hasil_lulus='1') THEN

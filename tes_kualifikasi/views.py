@@ -37,8 +37,7 @@ def form_data_kualifikasi(request):
             print("Data gagal ditambahkan")
 
         # REDIRECT
-        response = HttpResponseRedirect(reverse("tes_kualifikasi:list_ujian_kualifikasi"))
-        return response
+        return HttpResponseRedirect("/tes-kualifikasi/list-ujian/")
     
     return render(request, 'form_data_kualifikasi.html', context)
 
