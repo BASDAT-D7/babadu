@@ -2,31 +2,31 @@
 {% load static %}
 
 {% block meta %}
-<title>Enrolled Event</title>
+<title>Enrolled Partai Kompetisi Event</title>
 {% endblock meta %}
 
 {% block content %}
 <div class="bg-gradient-to-bl from-indigo-500/20 pt-28 pb-96 h-full">
     <div class="flex gap-10 justify-center">
-        <h1 class="flex justify-center shadow-2xl text-4xl text-white mb-10">Enrolled Event</h1>
+        <h1 class="flex justify-center shadow-2xl text-4xl text-white mb-10">Enrolled Partai Kompetisi Event</h1>
     </div>  
     <div class="flex gap-10 justify-center">
         <div class="grid grid-cols-7 gap-y-6 gap-x-2 bg-gray/20 text-white shadow-inner border-white rounded-3xl py-12 px-16 items-center mx-10">
             <p class="text-blue font-bold">Nama Event</p>
             <p class="text-blue font-bold">Tahun</p>
             <p class="text-blue font-bold">Stadium</p>
+            <p class="text-blue font-bold">Jenis Partai</p>
             <p class="text-blue font-bold">Kategori</p>
             <p class="text-blue font-bold">Tanggal Mulai</p>
             <p class="text-blue font-bold">Tanggal Selesai</p>
-            <p class="text-blue font-bold"></p>
-            {% for event in list_enrolled_event %}
-                <p>{{ event.nama_event }}</p>
-                <p>{{ event.tahun }}</p>
-                <p>{{ event.stadium }}</p>
-                <p>{{ event.kategori }}</p>
-                <p>{{ event.tgl_mulai }}</p>
-                <p>{{ event.tgl_selesai }}</p>
-                <button class="border-2 border-red text-red rounded-xl py-2 px-6 hover:bg-red hover:text-black duration-200"><a href="/daftar-event/stadium/{{ event.stadium_id }}/event/{{ event.id }}/">Unenroll</a></button>
+            {% for partai in list_enrolled_partai %}
+                <p>{{ partai.nama_event }}</p>
+                <p>{{ partai.tahun }}</p>
+                <p>{{ partai.stadium }}</p>
+                <p>{{ partai.jenis_partai }}</p>
+                <p>{{ partai.kategori }}</p>
+                <p>{{ partai.tgl_mulai }}</p>
+                <p>{{ partai.tgl_selesai }}</p>
             {% endfor %}
         </div>
     </div>
