@@ -140,15 +140,20 @@ def pertanyaan_kualifikasi(request, tahun, batch, tempat, tanggal):
         jawaban_benar += 1 if (jawaban_soal_4 == context['pertanyaan_kualifikasi'][3]['kunci_jawaban']) else 0
         jawaban_benar += 1 if (jawaban_soal_5 == context['pertanyaan_kualifikasi'][4]['kunci_jawaban']) else 0
 
-        # HANDLE SUDAH PERNAH UJIAN INI
+        # HANDLE SUDAH LULUS
         user_id = request.COOKIES.get('user_id')
+        result = query_result(f"SELECT * FROM atlet_kualifikasi WHERE id_atlet = '{user_id}';")
+        if (len(result) > 0):
+            context['message'] = "Anda sudah lulus ujian kualifikasi"
+            return render(request, 'pertanyaan_kualifikasi.html', context)
+
+        # HANDLE SUDAH PERNAH UJIAN INI
         result = query_result(f"SELECT * FROM atlet_nonkualifikasi_ujian_kualifikasi WHERE id_atlet = '{user_id}' AND tahun = '{tahun}' AND batch = '{batch}' AND tempat = '{tempat}' AND tanggal = '{tanggal}';")
         if (len(result) > 0):
             context['message'] = "Anda sudah pernah mengikuti ujian ini"
             return render(request, 'pertanyaan_kualifikasi.html', context)
 
         # INSERT DATA
-        user_id = request.COOKIES.get('user_id')
         hasil_lulus = True if (jawaban_benar >= 4) else False
         query_add(f"""
                     INSERT INTO atlet_nonkualifikasi_ujian_kualifikasi (id_atlet, tahun, batch, tempat, tanggal, hasil_lulus)
