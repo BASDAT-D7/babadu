@@ -101,11 +101,11 @@ WSGI_APPLICATION = "babadu.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'badminton',
+        'NAME': 'railway',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'PASSWORD': 'wJAHKbbicSnC0svrgCfT',
+        'HOST': 'containers-us-west-125.railway.app',
+        'PORT': '7956',
     }
 }
 

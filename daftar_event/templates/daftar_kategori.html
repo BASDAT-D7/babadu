@@ -51,45 +51,49 @@
         </div>  
     </div>
     <div class="flex gap-10 justify-center py-4">
-        <div class="grid grid-cols-4 gap-y-6 gap-x-24 bg-gray/20 text-white shadow-inner border-white rounded-3xl py-12 px-16 items-center mx-10">
-            <p class="text-blue font-bold">Kategori</p>
-            <p class="text-blue font-bold">Partner</p>
-            <p class="text-blue font-bold">Kapasitas</p>
-            <p class="text-blue font-bold"></p>
-            {% for k in daftar_kategori %}
+        <div class="flex gap-10 justify-center py-4">
+            <div class="grid grid-cols-4 gap-y-6 gap-x-24 bg-gray/20 text-white shadow-inner border-white rounded-3xl py-12 px-16 items-center mx-10">
+              <p class="text-blue font-bold">Kategori</p>
+              <p class="text-blue font-bold">Partner</p>
+              <p class="text-blue font-bold">Kapasitas</p>
+              <p class="text-blue font-bold"></p>
+          
+              {% for k in daftar_kategori %}
                 <p>{{ k.kategori }}</p>
-
-                
-                <select name="partner" id="partner" class="rounded-xl text-black w-64 p-1">
-                    {% for p in daftar_pemain %}
-                        {% if k.kategori == p.partai %}
-                            {% for partner in p.pasangan %}
-                                <option value="{{ partner }}">{{ partner }}</option>             
-                            {% endfor %}  
-                        {% else %}
-                        <option value="-">-</option> 
-                        {% endif %}    
-                    {% endfor %}
-                </select>
+                <form id="nama_atlet_{{ k.kategori }}" method="POST" action="/daftar-event/stadium/{{ data.nama_stadium}}/event/{{ data.nama_event }}/daftar/{{k.kategori}}">
+                    {% csrf_token %} 
+                        <select name="partner" class="rounded-xl text-black w-64 p-1">
+                        {% for p in daftar_pemain %}
+                            {% if k.kategori == p.partai %}
+                                {% for partner in p.pasangan %}
+                                    <option value="{{ partner }}">{{ partner }}</option>
+                                {% endfor %}
+                            {% else %}
+                                <option value="-">-</option>
+                            {% endif %}
+                        {% endfor %}
+                        </select>
+                </form>
                 <p>{{ k.jumlah_peserta }}/{{ data.kapasitas_total }}</p>
                 {% if jenis_kelamin %}
-                    {% if k.kategori == 'TA' or k.kategori == 'GA' or k.kategori == 'GC' %}
-                        <button class="border-2 border-green text-green rounded-xl py-2 px-6 hover:bg-green hover:text-black duration-200"><a href="/daftar-event/stadium/{{ stadium.id }}/event/{{ event.id }}/">Daftar</a></button>
+                    {% if k.kategori == 'Tunggal Putra' or k.kategori == 'Ganda Putra' or k.kategori == 'Ganda Campuran' %}
+                        <button type="submit" form= "nama_atlet_{{ k.kategori }}" class="border-2 border-green text-green rounded-xl py-2 px-6 hover:bg-green hover:text-black duration-200">Daftar</button>
                     {% else %}
                         <button class="hidden-button" disabled></button>
                     {% endif %}
-                    
+    
                 {% else %}
-                    {% if k.kategori == 'TI' or k.kategori == 'GI' or k.kategori == 'GC'  %}
-                        <button class="border-2 border-green text-green rounded-xl py-2 px-6 hover:bg-green hover:text-black duration-200"><a href="/daftar-event/stadium/{{ stadium.id }}/event/{{ event.id }}/">Daftar</a></button>
+                    {% if k.kategori == 'Tunggal Putri' or k.kategori == 'Ganda Putri' or k.kategori == 'Ganda Campuran' %}
+                        <button type="submit" form= "nama_atlet_{{ k.kategori }}"  class="border-2 border-green text-green rounded-xl py-2 px-6 hover:bg-green hover:text-black duration-200">Daftar</button>
                     {% else %}
                         <button class="hidden-button" disabled></button>
                     {% endif %}
                 {% endif %}
                 
-            {% endfor %}
-        </div>
-    </div>
+              {% endfor %}
+            </div>
+          </div>
+          
     {% endwith %}
 </div>
 {% endblock content %}

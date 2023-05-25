@@ -2,6 +2,7 @@ from django.shortcuts import render
 from babadu_function.general import *
 from babadu_function.authentication import *
 from datetime import date
+import uuid
 
 # Create your views here.
 @role_required(['ATLET'])
@@ -101,13 +102,12 @@ def daftar_kategori(request, nama_stadium, nama_event):
         JOIN ATLET as A ON PK.id_atlet_kualifikasi= A.id
         JOIN MEMBER as M ON A.id = M.id
         WHERE PPK.nama_event = '{nama_event}'
-        AND A.jenis_kelamin = '{jenis_kelamin}'
-        AND PPK.jenis_partai LIKE "G%"
-        AND PK.id_atlet_ganda IN (
+        AND PPK.jenis_partai LIKE 'G%'
+        AND PK.id_atlet_ganda NOT IN (
             SELECT PK2.id_atlet_ganda
             FROM PESERTA_KOMPETISI as PK2
             GROUP BY PK2.id_atlet_ganda
-            HAVING COUNT(*) = 1
+            HAVING COUNT(*) = 2
         )
         GROUP BY PPK.jenis_partai, PPK.nama_event;
         ''')
@@ -119,6 +119,14 @@ def daftar_kategori(request, nama_stadium, nama_event):
             'jenis_kelamin' : jenis_kelamin
         }
 
+    partai_dict = {
+        "TA": "Tunggal Putra",
+        "TI": "Tunggal Putri",
+        "GA": "Ganda Putra",
+        "GI" : "Ganda Putri",
+        "GC" : "Ganda Campuran"
+
+    }
 
     for row in result_stadium_event:
         list_kategori_by_event["stadium_event"].append({
@@ -136,7 +144,7 @@ def daftar_kategori(request, nama_stadium, nama_event):
     
     for row in result_kategori:
         list_kategori_by_event["daftar_kategori"].append({
-            'kategori': row[0],
+            'kategori': partai_dict[row[0]],
             'jumlah_peserta' : row[1]
         })
 
@@ -144,8 +152,97 @@ def daftar_kategori(request, nama_stadium, nama_event):
         pasangan = row[0].split(',')
         list_kategori_by_event["daftar_pemain"].append({
             'pasangan': pasangan,
-            'partai' : row[1]
+            'partai' : partai_dict[row[1]]
         })
+
+    print(user_id)
 
 
     return render(request, 'daftar_kategori.html', list_kategori_by_event)
+
+@role_required(['ATLET'])
+def tambah_peserta(request, nama_stadium, nama_event, nama_kategori):
+    if request.method == 'POST':
+        selected_partner = request.POST.get('partner')
+        new_atletganda_uuid = uuid.uuid4()
+        user_id = request.COOKIES.get('user_id')
+
+        if(nama_kategori.__contains__("Ganda")):
+            if(selected_partner!="-"):
+                result_pemain_tunggal = query_result(f'''
+                SELECT PK.id_atlet_ganda, PK.id_atlet_kualifikasi
+                FROM MEMBER as M
+                JOIN ATLET as A ON A.id = M.id
+                JOIN PESERTA_KOMPETISI as PK ON PK.id_atlet_kualifikasi = M.id
+                WHERE M.nama = '{selected_partner}';
+                ''')
+            
+                uuid_atlet_ganda_pasangan = result_pemain_tunggal[0][0]
+                uuid_atlet_kualifikasi_pasangan = result_pemain_tunggal[0][1]
+
+                
+                
+                result_pemain_tunggal = query_result(f'''
+                SELECT *
+                FROM ATLET_GANDA
+                WHERE 
+                ((id_atlet_kualifikasi = '{uuid_atlet_kualifikasi_pasangan}' AND id_atlet_kualifikasi_2 = '{user_id}') OR (id_atlet_kualifikasi = '{user_id}' AND id_atlet_kualifikasi_2 = '{uuid_atlet_kualifikasi_pasangan}'));
+                ''')
+
+                if(len(result_pemain_tunggal)==0):
+                    query_add(f'''
+                    INSERT INTO ATLET_GANDA VALUES ('{new_atletganda_uuid}', '{uuid_atlet_kualifikasi_pasangan}', '{user_id}')
+                    ''')
+        
+        result_jumlah_peserta_kompetisi = query_result(f'''
+        SELECT COUNT(*)
+        FROM PESERTA_KOMPETISI;
+        ''')
+
+        id_peserta_kompetisi = result_jumlah_peserta_kompetisi[0][0]+1
+
+        result_PESERTA = query_result(f'''
+            SELECT world_rank, world_tour_rank
+            FROM ATLET_KUALIFIKASI
+            WHERE id_atlet = '{user_id}';
+            ''')
+
+        world_rank = result_PESERTA[0][0]
+        world_rank_tour = result_PESERTA[0][1]
+
+        if(nama_kategori.__contains__("Ganda")):
+            query_add(f'''
+                INSERT INTO PESERTA_KOMPETISI (nomor_peserta, id_atlet_ganda, world_rank, world_tour_rank) VALUES ('{id_peserta_kompetisi}', '{new_atletganda_uuid}', '{world_rank}', '{world_rank_tour}')
+                ''')
+        else:
+            query_add(f'''
+                INSERT INTO PESERTA_KOMPETISI (nomor_peserta, id_atlet_ganda, id_atlet_kualifikasi, world_rank, world_tour_rank) VALUES ('{id_peserta_kompetisi}', '{new_atletganda_uuid}', '{user_id}', '{world_rank}', '{world_rank_tour}')
+                ''')
+        
+        partai_dict = {
+            "Tunggal Putra": "TA",
+            "Tunggal Putri": "TI",
+            "Ganda Putra": "GA",
+            "Ganda Putri" : "GI",
+            "Ganda Campuran" : "GC"
+        }
+
+        jenis_partai = partai_dict[nama_kategori]
+
+        result_tahun_event = query_result(f'''
+            SELECT tahun
+            FROM EVENT
+            WHERE nama_event = '{nama_event}'
+            AND nama_stadium = '{nama_stadium}';
+            ''')
+
+        tahun_event = result_tahun_event[0][0]
+
+        query_add(f'''
+                INSERT INTO PARTAI_PESERTA_KOMPETISI VALUES ('{jenis_partai}', '{nama_event}', '{tahun_event}', '{id_peserta_kompetisi}')
+                ''')
+
+        
+
+    return daftar_kategori(request, nama_stadium=nama_stadium, nama_event=nama_event)
+    
