@@ -18,3 +18,9 @@ DELETE FROM atlet_nonkualifikasi_ujian_kualifikasi WHERE id_atlet='75011b5f-723e
 DROP TRIGGER IF EXISTS mario_cek_atlet_pernah_ikut_ujian ON atlet_nonkualifikasi_ujian_kualifikasi;
 DROP FUNCTION IF EXISTS mario_cek_atlet_pernah_ikut_ujian;
 
+
+DROP TRIGGER IF EXISTS register_atlet ON atlet;
+DROP FUNCTION IF EXISTS register_atlet();
+
+DROP TRIGGER IF EXISTS cek_email_exist ON member;
+DROP FUNCTION IF EXISTS cek_email_exist();
