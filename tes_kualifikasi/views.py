@@ -161,8 +161,7 @@ def pertanyaan_kualifikasi(request, tahun, batch, tempat, tanggal):
                         '{hasil_lulus}');
                     """)
         # REDIRECT
-        response = HttpResponseRedirect(reverse("riwayat_ujian_kualifikasi"))
-        return response
+        return HttpResponseRedirect("/tes-kualifikasi/riwayat/")
 
     return render(request, 'pertanyaan_kualifikasi.html', context)
 
